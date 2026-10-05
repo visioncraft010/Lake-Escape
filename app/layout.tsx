@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BookingBar } from "@/components/BookingBar";
 import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     default: "Lake Escape | Floating Luxury on Tehri Lake",
     template: "%s | Lake Escape"
   },
-  description: "A cinematic floating luxury hotel on Tehri Lake, Uttarakhand. Four premium suites, private dining, sunset cruises, and curated mountain experiences.",
+  description: "A cinematic floating luxury hotel on Tehri Lake, Uttarakhand. Four premium staterooms, whole boat hire, private dining, sunset cruises, and curated mountain experiences.",
   openGraph: {
     title: "Lake Escape | Floating Luxury on Tehri Lake",
     description: "A cinematic floating luxury hotel on Tehri Lake, Uttarakhand.",
@@ -21,14 +22,19 @@ export const metadata: Metadata = {
   }
 };
 
+import { LightboxProvider } from "@/providers/LightboxProvider";
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sans antialiased bg-ocean text-cream" suppressHydrationWarning>
-        <MotionProvider />
-        <Navbar />
-        {children}
-        <Footer />
+      <body className="font-sans antialiased bg-white text-[#1A0F0A]" suppressHydrationWarning>
+        <LightboxProvider>
+          <MotionProvider />
+          <Navbar />
+          {children}
+          <BookingBar />
+          <Footer />
+        </LightboxProvider>
       </body>
     </html>
   );

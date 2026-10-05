@@ -1,187 +1,124 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Calendar, UserPlus, Minus, Plus, ChevronUp, ChevronDown } from "lucide-react";
-import { useLanguage } from "@/providers/LanguageProvider";
+import { Calendar, Users, Home, ArrowRight } from "lucide-react";
+import { rooms } from "@/lib/data";
 
 export function BookingBar() {
-  const { t } = useLanguage();
   const router = useRouter();
 
-  // Local states
-  const [checkIn, setCheckIn] = useState("2026-08-14");
-  const [checkOut, setCheckOut] = useState("2026-08-16");
-  const [adults, setAdults] = useState(2);
-  const [kids, setKids] = useState(0);
-  const [guestModalOpen, setGuestModalOpen] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const [checkIn, setCheckIn] = useState("2026-10-15");
+  const [checkOut, setCheckOut] = useState("2026-10-17");
+  const [guests, setGuests] = useState(2);
+  const [selectedRoom, setSelectedRoom] = useState("lake-view-suite");
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Close guest modal if clicked outside
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setGuestModalOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const handleScroll = () => {
+      // Show sticky bar when scrolled past 250px
+      setIsVisible(window.scrollY > 250);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Format guest text localized
-  const getGuestLabel = () => {
-    const adultsText = adults === 1 ? `1 ${t.booking.adult}` : `${adults} ${t.booking.adults}`;
-    const kidsText = kids === 0 ? `0 ${t.booking.children}` : (kids === 1 ? `1 ${t.booking.child}` : `${kids} ${t.booking.children}`);
-    return `${adultsText}, ${kidsText}`;
-  };
-
-  const handleBookRedirect = (e: React.FormEvent) => {
+  const handleBook = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = new URLSearchParams({
+    const params = new URLSearchParams({
       checkIn,
       checkOut,
-      guests: String(adults + kids),
-      coupon: ""
-    }).toString();
-    router.push(`/booking?${query}`);
+      guests: String(guests),
+      room: selectedRoom
+    });
+    router.push(`/booking?${params.toString()}`);
   };
 
+  if (!isVisible) return null;
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 hidden border-t border-matte-black/10 bg-cream/95 py-3 shadow-[0_-4px_30px_rgba(28,27,25,0.06)] backdrop-blur-md lg:block">
-      <div className="mx-auto max-w-7xl px-6">
-        <form onSubmit={handleBookRedirect} className="flex items-center justify-between gap-6">
-          
-          {/* Calendar Check In */}
-          <div className="flex-1">
-            <label className="flex flex-col gap-0.5 cursor-pointer">
-              <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-matte-black/50">
-                {t.booking.checkin}
-              </span>
-              <div className="flex items-center gap-2 border-b border-matte-black/10 pb-1 pt-0.5 hover:border-olive transition">
-                <Calendar size={13} className="text-olive" />
-                <input
-                  type="date"
-                  value={checkIn}
-                  onChange={(e) => setCheckIn(e.target.value)}
-                  className="w-full bg-transparent font-sans text-xs outline-none text-matte-black font-semibold cursor-pointer"
-                  min="2026-07-07"
-                />
-              </div>
-            </label>
-          </div>
+    <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">
+      <form
+        onSubmit={handleBook}
+        className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full p-2.5 sm:p-2 shadow-2xl border border-[#2C1A10]/12 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#2C1A10]/8 items-center"
+      >
+        {/* Stateroom Select */}
+        <div className="px-3 py-1.5 col-span-2 sm:col-span-1">
+          <label className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-[#8C6747]">
+            <Home size={11} />
+            <span>Stateroom</span>
+          </label>
+          <select
+            value={selectedRoom}
+            onChange={(e) => setSelectedRoom(e.target.value)}
+            className="w-full bg-transparent text-xs font-semibold text-[#1A0F0A] outline-none cursor-pointer mt-0.5 truncate"
+          >
+            {rooms.map((r) => (
+              <option key={r.slug} value={r.slug}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {/* Calendar Check Out */}
-          <div className="flex-1">
-            <label className="flex flex-col gap-0.5 cursor-pointer">
-              <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-matte-black/50">
-                {t.booking.checkout}
-              </span>
-              <div className="flex items-center gap-2 border-b border-matte-black/10 pb-1 pt-0.5 hover:border-olive transition">
-                <Calendar size={13} className="text-olive" />
-                <input
-                  type="date"
-                  value={checkOut}
-                  onChange={(e) => setCheckOut(e.target.value)}
-                  className="w-full bg-transparent font-sans text-xs outline-none text-matte-black font-semibold cursor-pointer"
-                  min={checkIn || "2026-07-07"}
-                />
-              </div>
-            </label>
-          </div>
+        {/* Check In */}
+        <div className="px-3 py-1.5">
+          <label className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-[#8C6747]">
+            <Calendar size={11} />
+            <span>Check In</span>
+          </label>
+          <input
+            type="date"
+            value={checkIn}
+            onChange={(e) => setCheckIn(e.target.value)}
+            className="w-full bg-transparent text-xs font-semibold text-[#1A0F0A] outline-none cursor-pointer mt-0.5"
+          />
+        </div>
 
-          {/* Guest selector dropdown */}
-          <div className="flex-1 relative" ref={modalRef}>
-            <div className="flex flex-col gap-0.5">
-              <span className="font-sans text-[9px] font-bold uppercase tracking-wider text-matte-black/50">
-                {t.booking.guests}
-              </span>
-              <button
-                type="button"
-                onClick={() => setGuestModalOpen(!guestModalOpen)}
-                className="flex items-center justify-between border-b border-matte-black/10 pb-1.5 pt-1 hover:border-olive transition w-full text-left"
-              >
-                <div className="flex items-center gap-2">
-                  <UserPlus size={13} className="text-olive" />
-                  <span className="font-sans text-xs font-semibold text-matte-black">
-                    {getGuestLabel()}
-                  </span>
-                </div>
-                {guestModalOpen ? <ChevronUp size={12} className="text-matte-black/45" /> : <ChevronDown size={12} className="text-matte-black/45" />}
-              </button>
-            </div>
+        {/* Check Out */}
+        <div className="px-3 py-1.5">
+          <label className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-[#8C6747]">
+            <Calendar size={11} />
+            <span>Check Out</span>
+          </label>
+          <input
+            type="date"
+            value={checkOut}
+            onChange={(e) => setCheckOut(e.target.value)}
+            className="w-full bg-transparent text-xs font-semibold text-[#1A0F0A] outline-none cursor-pointer mt-0.5"
+          />
+        </div>
 
-            {/* Custom Popover Modal (Adults/Kids increment) */}
-            {guestModalOpen && (
-              <div className="absolute bottom-full mb-3 left-0 w-64 rounded-[6px] border border-matte-black/10 bg-cream p-4 shadow-xl z-50">
-                <div className="space-y-4">
-                  {/* Adults Row */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-sans text-xs font-semibold text-matte-black">{t.booking.adults}</p>
-                      <p className="font-sans text-[9px] text-matte-black/45">Age 13+</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setAdults(Math.max(1, adults - 1))}
-                        disabled={adults <= 1}
-                        className="flex h-6 w-6 items-center justify-center rounded-full border border-matte-black/10 hover:bg-beige transition disabled:opacity-30"
-                      >
-                        <Minus size={10} />
-                      </button>
-                      <span className="font-sans text-xs font-bold text-matte-black w-4 text-center">{adults}</span>
-                      <button
-                        type="button"
-                        onClick={() => setAdults(Math.min(4, adults + 1))}
-                        disabled={adults >= 4}
-                        className="flex h-6 w-6 items-center justify-center rounded-full border border-matte-black/10 hover:bg-beige transition disabled:opacity-30"
-                      >
-                        <Plus size={10} />
-                      </button>
-                    </div>
-                  </div>
+        {/* Guests */}
+        <div className="px-3 py-1.5">
+          <label className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-[#8C6747]">
+            <Users size={11} />
+            <span>Guests</span>
+          </label>
+          <select
+            value={guests}
+            onChange={(e) => setGuests(Number(e.target.value))}
+            className="w-full bg-transparent text-xs font-semibold text-[#1A0F0A] outline-none cursor-pointer mt-0.5"
+          >
+            <option value={1}>1 Guest</option>
+            <option value={2}>2 Guests</option>
+            <option value={3}>3 Guests</option>
+            <option value={4}>4 Guests</option>
+          </select>
+        </div>
 
-                  {/* Kids Row */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-sans text-xs font-semibold text-matte-black">{t.booking.children}</p>
-                      <p className="font-sans text-[9px] text-matte-black/45">Age 0-12</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setKids(Math.max(0, kids - 1))}
-                        disabled={kids <= 0}
-                        className="flex h-6 w-6 items-center justify-center rounded-full border border-matte-black/10 hover:bg-beige transition disabled:opacity-30"
-                      >
-                        <Minus size={10} />
-                      </button>
-                      <span className="font-sans text-xs font-bold text-matte-black w-4 text-center">{kids}</span>
-                      <button
-                        type="button"
-                        onClick={() => setKids(Math.min(3, kids + 1))}
-                        disabled={kids >= 3}
-                        className="flex h-6 w-6 items-center justify-center rounded-full border border-matte-black/10 hover:bg-beige transition disabled:opacity-30"
-                      >
-                        <Plus size={10} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Book Submit Trigger */}
+        {/* Submit Reserve Button */}
+        <div className="px-2 py-1 col-span-2 sm:col-span-1 flex items-center justify-end">
           <button
             type="submit"
-            className="btn btn-olive px-8 h-10 min-h-0 py-0 flex items-center text-[11px] font-bold uppercase tracking-wider"
+            className="btn-brown w-full py-2 px-4 text-xs font-semibold flex items-center justify-center gap-1.5"
           >
-            {t.booking.btnBook}
+            <span>Reserve</span>
+            <ArrowRight size={13} />
           </button>
+        </div>
 
-        </form>
-      </div>
+      </form>
     </div>
   );
 }

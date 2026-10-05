@@ -55,7 +55,7 @@ export function ShowreelModal({ isOpen, onClose }: ShowreelModalProps) {
           >
             <video
               className="h-full w-full object-cover"
-              src={media.heroVideo}
+              src={media.heroVideoDesktop}
               autoPlay
               controls
               playsInline

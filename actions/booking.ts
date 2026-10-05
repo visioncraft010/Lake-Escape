@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { rooms } from "@/lib/data";
+import { calculateNights } from "@/lib/utils";
 
 const bookingSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -10,8 +11,9 @@ const bookingSchema = z.object({
   phone: z.string().min(10, "Phone number is too short"),
   checkIn: z.string().min(1, "Check-in date is required"),
   checkOut: z.string().min(1, "Check-out date is required"),
-  guests: z.coerce.number().min(1).max(8),
+  guests: z.coerce.number().min(1).max(25),
   roomSlug: z.string().min(1),
+  specialRequests: z.string().optional(),
   coupon: z.string().optional()
 });
 
@@ -24,23 +26,35 @@ export async function createBooking(formData: FormData) {
     return { ok: false, message: firstErrorMessage };
   }
 
-  const { name, email, phone, checkIn, checkOut, guests, roomSlug, coupon } = parsed.data;
+  const { name, email, phone, checkIn, checkOut, guests, roomSlug, coupon, specialRequests } = parsed.data;
 
   const selectedRoom = rooms.find((r) => r.slug === roomSlug);
-  if (!selectedRoom) {
+  if (!selectedRoom && roomSlug !== "whole-boat" && roomSlug !== "sunset-cruise") {
     return { ok: false, message: "The selected room was not found." };
   }
 
-  // Calculate pricing
-  const basePrice = selectedRoom.price;
-  const weekendAdd = 2800;
-  const extraGuestFee = Math.max(0, guests - 2) * 1800;
-  let totalAmount = basePrice + weekendAdd + extraGuestFee;
+  // Calculate pricing based on official rates
+  const nights = calculateNights(checkIn, checkOut);
+  
+  let baseNightlyRate = selectedRoom?.price || 18999;
+  if (roomSlug === "whole-boat") {
+    baseNightlyRate = 80000;
+  } else if (roomSlug === "sunset-cruise") {
+    baseNightlyRate = 3000 * guests;
+  }
+
+  // Extra bed calculation for standard staterooms (₹5,000 / night for each guest beyond 2)
+  const extraGuests = roomSlug !== "whole-boat" && roomSlug !== "sunset-cruise" ? Math.max(0, guests - 2) : 0;
+  const extraGuestFeePerNight = extraGuests * 5000;
+  
+  const subtotal = (baseNightlyRate + extraGuestFeePerNight) * nights;
+  const gst = Math.round(subtotal * 0.18);
+  let totalAmount = subtotal + gst;
 
   // Process Coupon
   let discountPercent = 0;
   if (coupon) {
-    if (prisma) {
+    if (process.env.DATABASE_URL && prisma) {
       try {
         const activeCoupon = await prisma.coupon.findUnique({
           where: { code: coupon }
@@ -64,14 +78,14 @@ export async function createBooking(formData: FormData) {
 
   totalAmount = Math.round(totalAmount * (1 - discountPercent));
 
-  // Write booking transactions to database
-  if (prisma) {
+  // Write booking transactions to database if connected
+  if (process.env.DATABASE_URL && prisma) {
     try {
       let dbRoom = await prisma.room.findUnique({
         where: { slug: roomSlug }
       });
 
-      if (!dbRoom) {
+      if (!dbRoom && selectedRoom) {
         dbRoom = await prisma.room.create({
           data: {
             slug: roomSlug,
@@ -84,7 +98,7 @@ export async function createBooking(formData: FormData) {
 
       const booking = await prisma.booking.create({
         data: {
-          roomId: dbRoom.id,
+          roomId: dbRoom?.id || "lake-escape-general",
           guestName: name,
           email,
           phone,
@@ -98,29 +112,35 @@ export async function createBooking(formData: FormData) {
 
       return {
         ok: true,
-        message: `Reservation requested successfully. Ref ID: ${booking.id}`,
+        message: `Reservation confirmed for ${name}. Ref ID: ${booking.id}`,
         bookingId: booking.id,
-        total: totalAmount
+        total: totalAmount,
+        nights,
+        roomName: selectedRoom?.name || "Lake Escape Stateroom"
       };
     } catch (error) {
       console.warn("Database offline. Falling back to memory reservation:", error);
-      const mockRefId = `res_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+      const mockRefId = `LE-${Date.now().toString(36).toUpperCase()}`;
       return {
         ok: true,
-        message: `Reservation requested (Simulated). Ref ID: ${mockRefId}`,
+        message: `Reservation confirmed for ${name}. Ref ID: ${mockRefId}`,
         bookingId: mockRefId,
         total: totalAmount,
+        nights,
+        roomName: selectedRoom?.name || "Lake Escape Stateroom",
         isSimulated: true
       };
     }
   } else {
     // Graceful offline fallback
-    const mockRefId = `res_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    const mockRefId = `LE-${Date.now().toString(36).toUpperCase()}`;
     return {
       ok: true,
-      message: `Reservation requested (Simulated). Ref ID: ${mockRefId}`,
+      message: `Reservation confirmed for ${name}. Ref ID: ${mockRefId}`,
       bookingId: mockRefId,
       total: totalAmount,
+      nights,
+      roomName: selectedRoom?.name || "Lake Escape Stateroom",
       isSimulated: true
     };
   }

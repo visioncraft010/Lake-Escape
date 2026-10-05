@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Lock, Mail, Phone, User } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -24,36 +24,60 @@ export default function RegisterPage() {
     }, 500);
   };
 
+  const handleGoogleRegister = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push("/profile");
+    }, 500);
+  };
+
   return (
-    <main className="min-h-screen bg-[#081218] text-white flex items-center justify-center pt-24 pb-16 px-6 relative overflow-hidden font-sans">
-      <div className="relative z-10 w-full max-w-md bg-[#0d1b22] border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl space-y-6">
-        
+    <main style={{
+      minHeight: "100vh", background: "#faf6f0", color: "#1a0f0a",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: "6rem 1.5rem 3rem",
+    }}>
+      <div style={{
+        width: "100%", maxWidth: "440px",
+        display: "flex", flexDirection: "column", gap: "2rem",
+      }}>
         {/* Header */}
-        <div className="text-center space-y-2">
+        <div style={{ textAlign: "center" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/White%20logo.png"
+            src="/media/Black%20logo.png"
             alt="Lake Escape"
-            className="h-10 mx-auto object-contain mb-2"
+            style={{ height: "36px", margin: "0 auto 1rem", objectFit: "contain" }}
           />
-          <span className="font-sans text-[12px] font-semibold text-slate-400 uppercase tracking-[-0.01em] block">
-            Member Registration
-          </span>
-          <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.03em]">
-            Join Lake Escape Noir
+          <h1 style={{
+            fontFamily: "'Libre Baskerville', serif",
+            fontSize: "28px", fontWeight: 400, fontStyle: "italic",
+            margin: "0 0 0.5rem",
+          }}>
+            Join the Sanctuary
           </h1>
-          <p className="text-xs text-slate-400 font-normal">
-            Unlock direct member rates, priority speedboat transfers & bespoke stateroom preparation.
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+            color: "rgba(26, 15, 10, 0.45)",
+          }}>
+            Create your account for bespoke bookings and private charters.
           </p>
         </div>
 
         {/* Google OAuth Option */}
         <button
           type="button"
-          onClick={() => router.push("/profile")}
-          className="w-full flex items-center justify-center gap-3 bg-white text-gray-900 font-sans text-xs font-bold py-3 px-4 rounded-lg transition-all duration-200 hover:bg-slate-200 shadow-sm"
+          onClick={handleGoogleRegister}
+          style={{
+            width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem",
+            background: "#ffffff", border: "1px solid rgba(26, 15, 10, 0.12)",
+            color: "#1a0f0a", padding: "0.875rem", borderRadius: "4px",
+            fontFamily: "'DM Sans', sans-serif", fontSize: "14px", fontWeight: 500,
+            cursor: "pointer", transition: "all 0.2s ease",
+          }}
         >
-          <svg className="h-4 w-4" viewBox="0 0 24 24">
+          <svg style={{ width: "18px", height: "18px" }} viewBox="0 0 24 24">
             <path
               fill="#4285F4"
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -71,100 +95,139 @@ export default function RegisterPage() {
               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
             />
           </svg>
-          <span>Register with Google</span>
+          <span>Continue with Google</span>
         </button>
 
-        <div className="flex items-center gap-4 text-white/20">
-          <div className="h-px w-full bg-white/10" />
-          <span className="font-sans text-[10px] font-bold uppercase text-slate-500">OR</span>
-          <div className="h-px w-full bg-white/10" />
+        <div style={{
+          display: "flex", alignItems: "center", gap: "1rem",
+          color: "rgba(26, 15, 10, 0.25)",
+        }}>
+          <div style={{ flex: 1, height: "1px", background: "rgba(26, 15, 10, 0.1)" }} />
+          <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase" }}>or</span>
+          <div style={{ flex: 1, height: "1px", background: "rgba(26, 15, 10, 0.1)" }} />
         </div>
 
         {/* Registration Form */}
-        <form onSubmit={handleRegister} className="space-y-3.5">
+        <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div>
-            <label className="block font-sans text-[11px] font-bold uppercase text-slate-400 mb-1 tracking-[-0.01em]">
+            <label style={{
+              display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+              fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+              color: "rgba(26, 15, 10, 0.5)", marginBottom: "0.5rem",
+            }}>
               Full Name
             </label>
-            <div className="relative flex items-center bg-[#081218] border border-white/15 rounded-lg px-3 py-2.5">
-              <User size={15} className="text-slate-400 mr-2" />
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="bg-transparent w-full text-xs font-semibold text-white focus:outline-none"
-              />
-            </div>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              style={{
+                width: "100%", background: "#ffffff", border: "1px solid rgba(26, 15, 10, 0.12)",
+                padding: "0.875rem 1rem", borderRadius: "4px", fontSize: "14px",
+                color: "#1a0f0a", fontFamily: "'DM Sans', sans-serif", outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
           </div>
 
           <div>
-            <label className="block font-sans text-[11px] font-bold uppercase text-slate-400 mb-1 tracking-[-0.01em]">
+            <label style={{
+              display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+              fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+              color: "rgba(26, 15, 10, 0.5)", marginBottom: "0.5rem",
+            }}>
               Email Address
             </label>
-            <div className="relative flex items-center bg-[#081218] border border-white/15 rounded-lg px-3 py-2.5">
-              <Mail size={15} className="text-slate-400 mr-2" />
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="bg-transparent w-full text-xs font-semibold text-white focus:outline-none"
-              />
-            </div>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              style={{
+                width: "100%", background: "#ffffff", border: "1px solid rgba(26, 15, 10, 0.12)",
+                padding: "0.875rem 1rem", borderRadius: "4px", fontSize: "14px",
+                color: "#1a0f0a", fontFamily: "'DM Sans', sans-serif", outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
           </div>
 
           <div>
-            <label className="block font-sans text-[11px] font-bold uppercase text-slate-400 mb-1 tracking-[-0.01em]">
-              WhatsApp / Mobile (SMS Alerts)
+            <label style={{
+              display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+              fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+              color: "rgba(26, 15, 10, 0.5)", marginBottom: "0.5rem",
+            }}>
+              Phone Number (for booking confirmations)
             </label>
-            <div className="relative flex items-center bg-[#081218] border border-white/15 rounded-lg px-3 py-2.5">
-              <Phone size={15} className="text-slate-400 mr-2" />
-              <input
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="bg-transparent w-full text-xs font-semibold text-white focus:outline-none"
-              />
-            </div>
+            <input
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              style={{
+                width: "100%", background: "#ffffff", border: "1px solid rgba(26, 15, 10, 0.12)",
+                padding: "0.875rem 1rem", borderRadius: "4px", fontSize: "14px",
+                color: "#1a0f0a", fontFamily: "'DM Sans', sans-serif", outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
           </div>
 
           <div>
-            <label className="block font-sans text-[11px] font-bold uppercase text-slate-400 mb-1 tracking-[-0.01em]">
+            <label style={{
+              display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+              fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+              color: "rgba(26, 15, 10, 0.5)", marginBottom: "0.5rem",
+            }}>
               Password
             </label>
-            <div className="relative flex items-center bg-[#081218] border border-white/15 rounded-lg px-3 py-2.5">
-              <Lock size={15} className="text-slate-400 mr-2" />
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="bg-transparent w-full text-xs font-semibold text-white focus:outline-none"
-              />
-            </div>
+            <input
+              type="password"
+              required
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              style={{
+                width: "100%", background: "#ffffff", border: "1px solid rgba(26, 15, 10, 0.12)",
+                padding: "0.875rem 1rem", borderRadius: "4px", fontSize: "14px",
+                color: "#1a0f0a", fontFamily: "'DM Sans', sans-serif", outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
           </div>
 
-          <div className="pt-2">
+          <div style={{ paddingTop: "0.5rem" }}>
             <button
               type="submit"
               disabled={isLoading}
-              className="btn btn-primary w-full shadow-md"
+              style={{
+                width: "100%", background: "#1a0f0a", color: "#faf6f0",
+                padding: "1rem", borderRadius: "4px", border: "none",
+                fontFamily: "'DM Sans', sans-serif", fontSize: "12px",
+                fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase",
+                cursor: "pointer", display: "flex", alignItems: "center",
+                justifyContent: "center", gap: "0.5rem", transition: "opacity 0.2s",
+                opacity: isLoading ? 0.7 : 1,
+              }}
             >
-              <span>{isLoading ? "Creating Profile..." : "Complete Registration"}</span>
-              <ArrowRight size={15} />
+              <span>{isLoading ? "Creating Profile..." : "Create Account"}</span>
+              <ArrowRight size={14} />
             </button>
           </div>
         </form>
 
-        <div className="border-t border-white/[0.12] pt-4 text-center font-sans text-xs text-slate-400">
-          <span>Already have a profile? </span>
-          <Link href="/auth/login" className="text-white hover:underline font-bold">
+        <div style={{
+          borderTop: "1px solid rgba(26, 15, 10, 0.08)",
+          paddingTop: "1.25rem", textAlign: "center",
+          fontFamily: "'DM Sans', sans-serif", fontSize: "13px",
+          color: "rgba(26, 15, 10, 0.5)",
+        }}>
+          <span>Already registered? </span>
+          <Link href="/auth/login" style={{ color: "#1a0f0a", fontWeight: 600, textDecoration: "underline" }}>
             Sign In
           </Link>
         </div>
-
       </div>
     </main>
   );

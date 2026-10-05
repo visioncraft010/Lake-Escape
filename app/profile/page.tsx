@@ -85,199 +85,153 @@ export default function ProfilePage() {
     setTimeout(() => setDownloadSuccess(null), 3000);
   };
 
+  const tabStyle = (active: boolean) => ({
+    paddingBottom: "12px",
+    fontFamily: "'DM Sans', sans-serif" as const,
+    fontSize: "13px",
+    fontWeight: active ? 500 : 400,
+    color: active ? "#1a0f0a" : "rgba(26, 15, 10, 0.4)",
+    borderBottom: active ? "1px solid #1a0f0a" : "1px solid transparent",
+    background: "transparent",
+    border: "none",
+    borderBottomWidth: "1px",
+    borderBottomStyle: "solid" as const,
+    borderBottomColor: active ? "#1a0f0a" : "transparent",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+  });
+
   return (
-    <main className="min-h-screen bg-[#081218] text-white pt-28 pb-32 px-6 sm:px-12 font-sans">
-      <div className="max-w-[1300px] mx-auto space-y-10">
-        
-        {/* Profile Header Card */}
-        <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-5">
-              <div className="relative h-18 w-18 sm:h-20 sm:w-20 rounded-full bg-[#081218] border-2 border-white/20 flex items-center justify-center text-xl font-heading font-bold text-white shadow-lg">
-                AK
-              </div>
+    <main style={{
+      minHeight: "100vh", background: "#faf6f0", color: "#1a0f0a",
+      paddingTop: "clamp(7rem, 14vh, 10rem)",
+      paddingBottom: "clamp(4rem, 8vw, 8rem)",
+      paddingLeft: "clamp(1.5rem, 4vw, 4rem)",
+      paddingRight: "clamp(1.5rem, 4vw, 4rem)",
+    }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "3rem" }}>
 
-              <div className="space-y-1">
-                <div className="flex items-center gap-3">
-                  <h1 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-[-0.025em]">
-                    Aarav Kapoor
-                  </h1>
-                  <span className="bg-white/10 text-slate-200 font-sans text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded-md border border-white/15">
-                    Member
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 font-medium">
-                  <span>aarav.kapoor@example.com</span>
-                  <span>•</span>
-                  <span>+91 98765 12345</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <Link
-                href="/booking"
-                className="btn btn-primary"
-              >
-                Book New Stateroom
-              </Link>
+        {/* Profile Header */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          gap: "2rem", flexWrap: "wrap",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+            <div style={{
+              width: "56px", height: "56px", borderRadius: "50%",
+              background: "#1a0f0a", color: "#f0e8dc",
+              display: "grid", placeItems: "center",
+              fontFamily: "'Libre Baskerville', serif", fontSize: "18px",
+            }}>AK</div>
+            <div>
+              <h1 style={{
+                fontFamily: "'Libre Baskerville', serif",
+                fontSize: "24px", fontWeight: 400, margin: 0,
+              }}>Aarav Kapoor</h1>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: "13px",
+                color: "rgba(26, 15, 10, 0.4)", marginTop: "2px",
+              }}>aarav.kapoor@example.com</p>
             </div>
           </div>
+          <Link href="/booking" className="btn btn-primary">Book New Stay</Link>
         </div>
 
-        {/* Navigation Tabs Strip */}
-        <div className="flex items-center gap-6 border-b border-white/[0.12] pb-1 font-sans text-xs font-semibold tracking-[-0.01em]">
-          <button
-            onClick={() => setActiveTab("reservations")}
-            className={`pb-3 transition relative ${
-              activeTab === "reservations"
-                ? "text-white font-bold border-b-2 border-white"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            My Reservations ({reservations.length})
+        {/* Tabs */}
+        <div style={{
+          display: "flex", gap: "2rem",
+          borderBottom: "1px solid rgba(75, 48, 36, 0.08)",
+        }}>
+          <button onClick={() => setActiveTab("reservations")} style={tabStyle(activeTab === "reservations")}>
+            Reservations ({reservations.length})
           </button>
-          
-          <button
-            onClick={() => setActiveTab("preferences")}
-            className={`pb-3 transition relative ${
-              activeTab === "preferences"
-                ? "text-white font-bold border-b-2 border-white"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Guest Preferences
+          <button onClick={() => setActiveTab("preferences")} style={tabStyle(activeTab === "preferences")}>
+            Preferences
           </button>
-
-          <button
-            onClick={() => setActiveTab("security")}
-            className={`pb-3 transition relative ${
-              activeTab === "security"
-                ? "text-white font-bold border-b-2 border-white"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Account Details
+          <button onClick={() => setActiveTab("security")} style={tabStyle(activeTab === "security")}>
+            Account
           </button>
         </div>
 
-        {/* Tab Content 1: Reservations */}
+        {/* Reservations Tab */}
         {activeTab === "reservations" && (
-          <div className="space-y-6 animate-in fade-in duration-200">
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             {reservations.map((res) => {
               const isPast = res.status === "COMPLETED";
-
               return (
-                <div
-                  key={res.id}
-                  className={`bg-[#0d1b22] border rounded-xl transition-all duration-200 overflow-hidden ${
-                    isPast ? "border-white/10 opacity-75" : "border-white/15 shadow-xl hover:border-white/25"
-                  }`}
-                >
-                  {/* Reservation Top Bar */}
-                  <div className="bg-[#081218] px-6 sm:px-8 py-3.5 border-b border-white/[0.12] flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <span className="font-sans text-xs text-slate-400 uppercase font-medium">
-                        Confirmation:
-                      </span>
-                      <span className="font-sans text-sm font-bold text-white tracking-tight">
-                        {res.id}
-                      </span>
+                <div key={res.id} style={{
+                  background: "#fff", padding: "clamp(1.5rem, 3vw, 2rem)",
+                  opacity: isPast ? 0.7 : 1,
+                  borderBottom: "1px solid rgba(75, 48, 36, 0.06)",
+                }}>
+                  <div style={{
+                    display: "grid", gridTemplateColumns: "1fr 2fr 1fr",
+                    gap: "2rem", alignItems: "center",
+                  }}>
+                    <div style={{ position: "relative", aspectRatio: "16/10", overflow: "hidden" }}>
+                      <Image src={res.image} alt={res.roomName} fill className="object-cover" sizes="33vw" />
                     </div>
-
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`font-sans text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded-md ${
-                          res.status === "CONFIRMED"
-                            ? "bg-emerald-950 text-emerald-300 border border-emerald-800"
-                            : "bg-white/10 text-slate-300"
-                        }`}
-                      >
+                    <div>
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+                        color: "#9a7b5b", letterSpacing: "0.08em", textTransform: "uppercase",
+                        marginBottom: "4px",
+                      }}>{res.roomCategory}</p>
+                      <h3 style={{
+                        fontFamily: "'Libre Baskerville', serif",
+                        fontSize: "20px", fontWeight: 400, margin: "0 0 0.8rem",
+                      }}>{res.roomName}</h3>
+                      <div style={{
+                        display: "flex", gap: "2rem",
+                        fontFamily: "'DM Sans', sans-serif", fontSize: "13px",
+                        color: "rgba(26, 15, 10, 0.5)",
+                      }}>
+                        <span>{res.checkIn} → {res.checkOut}</span>
+                        <span>{res.guests}</span>
+                      </div>
+                      <div style={{
+                        marginTop: "0.6rem", display: "inline-block",
+                        fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+                        fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase",
+                        color: res.status === "CONFIRMED" ? "#2d6a4f" : "rgba(26, 15, 10, 0.35)",
+                        background: res.status === "CONFIRMED" ? "rgba(45, 106, 79, 0.08)" : "rgba(26, 15, 10, 0.04)",
+                        padding: "4px 10px",
+                      }}>
                         {res.status}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Reservation Content Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 p-6 sm:p-8 gap-6 items-center">
-                    
-                    {/* Room Image */}
-                    <div className="lg:col-span-4">
-                      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/15">
-                        <Image
-                          src={res.image}
-                          alt={res.roomName}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 1024px) 100vw, 33vw"
-                        />
                       </div>
                     </div>
-
-                    {/* Stay Information */}
-                    <div className="lg:col-span-5 space-y-2.5">
-                      <div>
-                        <span className="font-sans text-[11px] font-semibold text-slate-400 uppercase block">
-                          {res.roomCategory}
-                        </span>
-                        <h3 className="font-heading text-2xl text-white font-bold tracking-[-0.025em] mt-0.5">
-                          {res.roomName}
-                        </h3>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-xs font-sans text-slate-300 pt-2 border-t border-white/[0.12]">
-                        <div>
-                          <span className="text-slate-500 block text-[10px] uppercase font-semibold">Check-In</span>
-                          <span className="text-white font-semibold">{res.checkIn} (2:00 PM)</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500 block text-[10px] uppercase font-semibold">Check-Out</span>
-                          <span className="text-white font-semibold">{res.checkOut} (11:00 AM)</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500 block text-[10px] uppercase font-semibold">Guests</span>
-                          <span className="text-white font-semibold">{res.guests}</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500 block text-[10px] uppercase font-semibold">Boarding Jetty</span>
-                          <span className="text-emerald-400 font-semibold">Koti Colony Bay</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Price & Actions */}
-                    <div className="lg:col-span-3 lg:border-l lg:border-white/[0.12] lg:pl-6 space-y-3">
-                      <div>
-                        <span className="font-sans text-[10px] uppercase font-semibold text-slate-400 block">
-                          Total Paid
-                        </span>
-                        <p className="font-heading text-2xl font-bold text-white mt-0.5 tracking-tight">
-                          ₹{res.total.toLocaleString("en-IN")}
-                        </p>
-                        <span className="text-[11px] font-sans text-emerald-400 font-medium">
-                          ✓ Guaranteed Direct Rate
-                        </span>
-                      </div>
-
-                      <div className="space-y-2 pt-1">
+                    <div style={{ textAlign: "right" }}>
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+                        color: "rgba(26, 15, 10, 0.35)", letterSpacing: "0.06em",
+                        textTransform: "uppercase", marginBottom: "4px",
+                      }}>Total</p>
+                      <p style={{
+                        fontFamily: "'Libre Baskerville', serif",
+                        fontSize: "22px", margin: "0 0 1rem",
+                      }}>₹{res.total.toLocaleString("en-IN")}</p>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
                         <button
                           onClick={() => handleDownloadVoucher(res.id)}
-                          className="w-full flex items-center justify-center gap-2 border border-white/20 bg-white/5 hover:bg-white/10 text-white py-2 rounded-lg text-xs font-semibold uppercase tracking-[-0.01em] transition"
+                          style={{
+                            display: "flex", alignItems: "center", gap: "6px",
+                            fontFamily: "'DM Sans', sans-serif", fontSize: "12px",
+                            color: "#9a7b5b", background: "none", border: "none", cursor: "pointer",
+                          }}
                         >
-                          <Download size={14} className="text-slate-300" />
-                          <span>{downloadSuccess === res.id ? "Voucher Downloaded" : "Download Voucher"}</span>
+                          <Download size={13} />
+                          <span>{downloadSuccess === res.id ? "Downloaded" : "Download Voucher"}</span>
                         </button>
-
-                        <a
-                          href="mailto:stay@lakeescape.in?subject=Reservation Inquiry"
-                          className="w-full flex items-center justify-center gap-2 text-slate-400 hover:text-white py-1 text-xs font-semibold transition"
-                        >
+                        <a href="mailto:stay@lakeescape.in" style={{
+                          display: "flex", alignItems: "center", gap: "6px",
+                          fontFamily: "'DM Sans', sans-serif", fontSize: "12px",
+                          color: "rgba(26, 15, 10, 0.35)",
+                        }}>
                           <Mail size={13} />
-                          <span>Concierge Desk</span>
+                          <span>Concierge</span>
                         </a>
                       </div>
                     </div>
-
                   </div>
                 </div>
               );
@@ -285,120 +239,89 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Tab Content 2: Preferences */}
+        {/* Preferences Tab */}
         {activeTab === "preferences" && (
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-6 animate-in fade-in duration-200">
-            <div>
-              <h2 className="font-heading text-2xl font-bold text-white tracking-[-0.025em]">
-                Stateroom Preferences
-              </h2>
-              <p className="text-xs text-slate-400 font-normal mt-1">
-                Your personalized preferences will be automatically configured for all upcoming voyages.
-              </p>
-            </div>
+          <div style={{ maxWidth: "700px" }}>
+            <h2 style={{
+              fontFamily: "'Libre Baskerville', serif",
+              fontSize: "24px", fontWeight: 400, fontStyle: "italic",
+              margin: "0 0 0.5rem",
+            }}>Room Preferences</h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+              color: "rgba(26, 15, 10, 0.45)", marginBottom: "2rem",
+            }}>Your preferences are configured for upcoming stays.</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-              <div className="space-y-3">
-                <span className="font-sans text-[11px] font-bold text-slate-300 uppercase block tracking-[-0.01em]">
-                  Dining & Dietary
-                </span>
-                <div className="space-y-2 text-slate-200 font-medium">
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-slate-800" />
-                    <span>Vegetarian Gourmet Options Preferred</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-slate-800" />
-                    <span>Organic Himalayan Herbal Tea Selection</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" className="rounded text-slate-800" />
-                    <span>Gluten-Sensitive Breakfast Hamper</span>
-                  </label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+              {[
+                { cat: "Dining", items: ["Vegetarian Options", "Organic Herbal Tea", "Gluten-Sensitive Breakfast"] },
+                { cat: "Comfort", items: ["Hypoallergenic Pillows", "Cedar & Pine Fragrance", "Telescope Setup on Deck"] },
+              ].map((group) => (
+                <div key={group.cat}>
+                  <p style={{
+                    fontFamily: "'DM Sans', sans-serif", fontSize: "11px", fontWeight: 500,
+                    letterSpacing: "0.08em", textTransform: "uppercase", color: "#9a7b5b",
+                    marginBottom: "1rem",
+                  }}>{group.cat}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {group.items.map((item) => (
+                      <label key={item} style={{
+                        display: "flex", alignItems: "center", gap: "10px",
+                        fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+                        color: "rgba(26, 15, 10, 0.7)", cursor: "pointer",
+                        padding: "10px 14px", background: "#fff",
+                      }}>
+                        <input type="checkbox" defaultChecked style={{ accentColor: "#1a0f0a" }} />
+                        {item}
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div className="space-y-3">
-                <span className="font-sans text-[11px] font-bold text-slate-300 uppercase block tracking-[-0.01em]">
-                  Stateroom & Comfort
-                </span>
-                <div className="space-y-2 text-slate-200 font-medium">
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-slate-800" />
-                    <span>Hypoallergenic Feather Down Pillows</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-slate-800" />
-                    <span>Sunset Turndown Fragrance: Cedar & Mountain Pine</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 bg-[#081218] border border-white/10 rounded-lg cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-slate-800" />
-                    <span>Nightly Stargazing Telescope Setup on Deck</span>
-                  </label>
-                </div>
-              </div>
+              ))}
             </div>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                className="btn btn-primary"
-              >
-                Save Preferences
-              </button>
-            </div>
+            <button type="button" className="btn btn-primary" style={{ marginTop: "2rem" }}>Save Preferences</button>
           </div>
         )}
 
-        {/* Tab Content 3: Security & Account */}
+        {/* Security Tab */}
         {activeTab === "security" && (
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-5 max-w-xl animate-in fade-in duration-200">
-            <div>
-              <h2 className="font-heading text-2xl font-bold text-white tracking-[-0.025em]">
-                Guest Profile Credentials
-              </h2>
-              <p className="text-xs text-slate-400 font-normal mt-1">
-                Manage your credentials for instant reservation access.
-              </p>
+          <div style={{ maxWidth: "480px" }}>
+            <h2 style={{
+              fontFamily: "'Libre Baskerville', serif",
+              fontSize: "24px", fontWeight: 400, fontStyle: "italic",
+              margin: "0 0 0.5rem",
+            }}>Account Details</h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+              color: "rgba(26, 15, 10, 0.45)", marginBottom: "2rem",
+            }}>Manage your credentials for reservation access.</p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+              {[
+                { label: "Full Name", value: "Aarav Kapoor", type: "text" },
+                { label: "Email", value: "aarav.kapoor@example.com", type: "email" },
+                { label: "Mobile", value: "+91 98765 12345", type: "tel" },
+              ].map((field) => (
+                <div key={field.label}>
+                  <label style={{
+                    display: "block", fontFamily: "'DM Sans', sans-serif", fontSize: "11px",
+                    fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase",
+                    color: "rgba(26, 15, 10, 0.4)", marginBottom: "6px",
+                  }}>{field.label}</label>
+                  <input
+                    type={field.type}
+                    defaultValue={field.value}
+                    style={{
+                      width: "100%", padding: "12px 14px",
+                      background: "#fff", border: "1px solid rgba(75, 48, 36, 0.1)",
+                      fontFamily: "'DM Sans', sans-serif", fontSize: "14px", color: "#1a0f0a",
+                      borderRadius: "2px", outline: "none",
+                    }}
+                  />
+                </div>
+              ))}
             </div>
-
-            <div className="space-y-3.5 text-xs font-sans">
-              <div>
-                <label className="block text-slate-400 text-[11px] font-bold uppercase mb-1">Full Name</label>
-                <input
-                  type="text"
-                  defaultValue="Aarav Kapoor"
-                  className="w-full bg-[#081218] border border-white/15 rounded-lg px-3.5 py-2.5 text-white font-medium focus:outline-none focus:border-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-400 text-[11px] font-bold uppercase mb-1">Email Address</label>
-                <input
-                  type="email"
-                  defaultValue="aarav.kapoor@example.com"
-                  className="w-full bg-[#081218] border border-white/15 rounded-lg px-3.5 py-2.5 text-white font-medium focus:outline-none focus:border-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-400 text-[11px] font-bold uppercase mb-1">Verified Mobile (SMS Alerts)</label>
-                <input
-                  type="tel"
-                  defaultValue="+91 98765 12345"
-                  className="w-full bg-[#081218] border border-white/15 rounded-lg px-3.5 py-2.5 text-white font-medium focus:outline-none focus:border-white"
-                />
-              </div>
-            </div>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                className="btn btn-primary"
-              >
-                Update Profile
-              </button>
-            </div>
+            <button type="button" className="btn btn-primary" style={{ marginTop: "2rem" }}>Update Profile</button>
           </div>
         )}
 

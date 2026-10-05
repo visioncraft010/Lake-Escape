@@ -2,158 +2,170 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Compass, Layers, Radio, Wind } from "lucide-react";
+import { Ship, ShieldCheck, Zap, Compass, ArrowRight, CheckCircle2, Wind, Eye } from "lucide-react";
+
+const specs = [
+  { label: "Vessel Type", value: "Luxury Floating Catamaran" },
+  { label: "Overall Length", value: "85 Feet (26 Metres)" },
+  { label: "Beam / Width", value: "28 Feet (8.5 Metres)" },
+  { label: "Cruising Waterway", value: "Tehri Lake, Uttarakhand" },
+  { label: "Guest Capacity", value: "4 Private Staterooms (Up to 12 Guests)" },
+  { label: "Decks", value: "2 (Lounge Deck & 360° Rooftop Deck)" },
+  { label: "Propulsion & Grid", value: "Hybrid Silent Solar Grid & Eco-Drive" },
+  { label: "Communications", value: "High-Speed Starlink Maritime Satellite" },
+  { label: "Speedboat Transfers", value: "Twin High-Speed Launch Included" }
+];
 
 export default function VesselPage() {
   return (
-    <main className="min-h-screen bg-[#081218] text-white pt-28 pb-32 px-6 sm:px-12 font-sans">
-      <div className="max-w-[1400px] mx-auto space-y-20">
-        
-        {/* ─── HERO ─── */}
-        <section className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-slate-400 uppercase tracking-[-0.01em]">
-            <Compass size={14} className="text-slate-400" />
-            <span>Naval Architecture & Engineering</span>
+    <main className="bg-[#FBF9F5] text-[#1A0F0A] min-h-screen pt-24 pb-20 px-[10px]">
+      <div className="max-w-[1360px] mx-auto space-y-16">
+
+        {/* Hero */}
+        <section className="text-center max-w-3xl mx-auto pt-4 sm:pt-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F5EFEB] text-[10px] font-bold uppercase tracking-wider text-[#8C6747] mb-3 border border-[#2C1A10]/10">
+            <Ship size={12} />
+            <span>Vessel Architecture & Engineering</span>
           </div>
-          
-          <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-[-0.035em]">
-            The Floating Resort
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-[#1A0F0A] leading-[1.08] mb-4">
+            A floating sanctuary<br />
+            <span className="text-[#8C6747]">in Tehri Lake.</span>
           </h1>
 
-          <p className="font-sans text-sm sm:text-base font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-            Lake Escape is a 32-meter bespoke floating sanctuary crafted specifically for the calm alpine waters of Tehri Lake, Uttarakhand. Engineered for zero-emission quietness, extreme structural stability, and 360-degree panoramic comfort.
+          <p className="text-xs sm:text-base text-[#1A0F0A]/80 max-w-xl mx-auto leading-relaxed font-normal">
+            Lake Escape is an 85-foot bespoke floating retreat engineered for the pristine waters of Tehri Lake. Designed for silent zero-emission anchoring, structural stability, and panoramic Himalayan vistas.
           </p>
-        </section>
 
-        {/* ─── MAIN VESSEL ARCHITECTURE VISUAL CARD ─── */}
-        <section className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0d1b22] shadow-2xl">
-          <Image
-            src="/images/rooms/suite-room/primary.jpg"
-            alt="Lake Escape Luxury Floating Resort Architecture"
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#081218] via-[#081218]/40 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="font-sans text-xs font-semibold text-slate-300 uppercase tracking-[-0.01em] block">
-                Flagship Vessel
-              </span>
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                Lake Escape I • 32 Meters
-              </h2>
-            </div>
-
-            <Link href="/booking" className="btn btn-primary">
-              Reserve Your Stay
+          <div className="flex flex-wrap justify-center gap-3 pt-6">
+            <Link
+              href="/boat-experience"
+              className="btn-brown px-7 py-3 text-xs uppercase tracking-wider font-bold rounded-full shadow-md"
+            >
+              Hire My Boat (₹80k Buyout)
+            </Link>
+            <Link
+              href="/rooms"
+              className="btn-white px-7 py-3 text-xs uppercase tracking-wider font-bold rounded-full"
+            >
+              Explore 4 Staterooms
             </Link>
           </div>
         </section>
 
-        {/* ─── 3 CORE ENGINEERING PILLARS ─── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Pillar 1 */}
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Wind size={22} className="text-slate-300" />
-            </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Silent Eco-Hybrid Propulsion
-            </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              Powered by advanced marine solar battery arrays and auxiliary silent generators, ensuring complete acoustic stillness at anchor and zero disturbance to mountain wildlife.
-            </p>
-          </div>
-
-          {/* Pillar 2 */}
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Layers size={22} className="text-slate-300" />
-            </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Tri-Level Observation Decks
-            </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              Three distinct floating levels: private lower stateroom decks, an executive dining salon, and an upper 360-degree observation deck with high-powered stargazing optics.
-            </p>
-          </div>
-
-          {/* Pillar 3 */}
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Radio size={22} className="text-slate-300" />
-            </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Starlink Maritime Connectivity
-            </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              Uninterrupted high-speed low-latency satellite internet across all staterooms and decks, allowing seamless remote work and live connectivity even in remote mountain bays.
-            </p>
-          </div>
-
-        </section>
-
-        {/* ─── FULL TECHNICAL SPECIFICATIONS MATRIX ─── */}
-        <section className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 sm:p-12 space-y-8 shadow-xl">
-          <div className="border-b border-white/[0.12] pb-4">
-            <span className="font-sans text-[11px] font-bold text-slate-400 uppercase tracking-[-0.01em] block">
-              Technical Documentation
+        {/* Feature Vessel Image */}
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] rounded-3xl overflow-hidden bg-[#1A0F0A] shadow-xl border border-[#2C1A10]/10">
+          <Image
+            src="/images/boat/Front View.JPG"
+            alt="Lake Escape floating catamaran front view"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 text-white max-w-md">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#F5EFEB] mb-1 block">
+              Architectural Profile
             </span>
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.025em] mt-0.5">
-              Vessel Specifications & Amenities Matrix
-            </h2>
+            <h3 className="text-xl sm:text-3xl font-medium text-white">
+              85ft Custom Floating Catamaran
+            </h3>
+          </div>
+        </div>
+
+        {/* Architecture & Engineering Grid */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="lg:col-span-6 bg-white rounded-3xl p-8 sm:p-12 border border-[#2C1A10]/10 shadow-sm space-y-6">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#8C6747] mb-1">
+                Design Philosophy
+              </p>
+              <h2 className="text-2xl sm:text-4xl font-medium text-[#1A0F0A]">
+                Engineering Quiet Exclusivity
+              </h2>
+            </div>
+
+            <p className="text-xs sm:text-sm text-[#1A0F0A]/80 leading-relaxed font-normal">
+              Designed as a modern floating haven, the vessel features twin buoyant hulls with a lightweight glass-and-cedar superstructure. Powered by a silent solar grid, it remains anchored quietly in secluded coves, ensuring your stay is completely peaceful.
+            </p>
+
+            <div className="space-y-3 pt-2">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8">
+                <Zap size={18} className="text-[#8C6747] shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs font-semibold text-[#1A0F0A]">Hybrid Silent Solar Grid</h4>
+                  <p className="text-[11px] text-[#1A0F0A]/70">Zero engine noise or vibration at anchor</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8">
+                <ShieldCheck size={18} className="text-[#8C6747] shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs font-semibold text-[#1A0F0A]">Twin Marine Stability Hulls</h4>
+                  <p className="text-[11px] text-[#1A0F0A]/70">Smooth, roll-free floating platform in all weather</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8">
+                <Wind size={18} className="text-[#8C6747] shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs font-semibold text-[#1A0F0A]">Dedicated Speedboat Launches</h4>
+                  <p className="text-[11px] text-[#1A0F0A]/70">On-demand 8-minute private transfers from dock</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-xs font-sans">
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Length Overall</span>
-              <p className="text-base font-bold text-white">32 Meters / 105 Feet</p>
+          <div className="lg:col-span-6 bg-white rounded-3xl p-8 sm:p-12 border border-[#2C1A10]/10 shadow-sm space-y-6">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#8C6747] mb-1">
+                Technical Data
+              </p>
+              <h3 className="text-2xl sm:text-3xl font-semibold text-[#1A0F0A]">
+                Vessel Specifications
+              </h3>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Cruising Waterway</span>
-              <p className="text-base font-bold text-white">Tehri Lake, Uttarakhand (840m Elevation)</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Guest Capacity</span>
-              <p className="text-base font-bold text-white">4 Private Staterooms (Up to 10 Guests)</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Boarding Transfer</span>
-              <p className="text-base font-bold text-white">Dedicated Twin-Engine VIP Speedboat</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Power Management</span>
-              <p className="text-base font-bold text-white">Solar Photovoltaic + Lithium Energy Storage</p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <span className="text-slate-400 font-semibold uppercase text-[10px]">Safety & Nav</span>
-              <p className="text-base font-bold text-white">Garmin Sonar & Full Marine Safety Certified</p>
+            <div className="divide-y divide-[#2C1A10]/10 text-xs">
+              {specs.map((spec, i) => (
+                <div key={i} className="py-3 flex justify-between items-center">
+                  <span className="font-semibold text-[#8C6747]">{spec.label}</span>
+                  <span className="font-medium text-[#1A0F0A]">{spec.value}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ─── BOTTOM CTA ─── */}
-        <section className="bg-gradient-to-r from-[#0d1b22] to-[#11222c] border border-white/15 rounded-2xl p-8 sm:p-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-2xl">
-          <div>
-            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Ready to Board Lake Escape?
-            </h3>
-            <p className="text-sm text-slate-300 font-normal mt-1">
-              Check real-time stateroom availability or plan a private whole-boat charter.
+        {/* CTA Banner */}
+        <section className="bg-[#1A0F0A] text-white rounded-3xl p-8 sm:p-14 text-center border border-[#1A0F0A] shadow-xl">
+          <div className="max-w-2xl mx-auto space-y-4">
+            <span className="px-3.5 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider border border-white/25 inline-block">
+              Experience the Vessel
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-medium text-white">
+              Plan Your Stay on Lake Escape
+            </h2>
+            <p className="text-xs sm:text-sm text-white/90 font-normal leading-relaxed">
+              Book an individual suite or reserve the entire vessel exclusively for up to 12 guests.
             </p>
+            <div className="pt-3 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/booking"
+                className="px-7 py-3.5 rounded-full bg-white text-[#1A0F0A] hover:bg-[#F5EFEB] text-xs font-bold uppercase tracking-wider transition shadow-md flex items-center gap-2 cursor-pointer"
+              >
+                <span>Book a Stateroom</span>
+                <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/boat-experience"
+                className="px-7 py-3.5 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-bold uppercase tracking-wider transition border border-white/30 cursor-pointer"
+              >
+                Hire My Boat
+              </Link>
+            </div>
           </div>
-          <Link href="/booking" className="btn btn-primary whitespace-nowrap">
-            Check Availability
-          </Link>
         </section>
 
       </div>

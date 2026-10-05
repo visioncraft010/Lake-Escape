@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUp, Compass, Mail, MapPin, Phone } from "lucide-react";
-import { navItems } from "@/lib/data";
+import Image from "next/image";
+import { Instagram, Facebook, Twitter, Phone, Mail, ArrowUp } from "lucide-react";
+import { media } from "@/lib/data";
 
 export function Footer() {
   const handleScrollToTop = () => {
@@ -10,100 +11,140 @@ export function Footer() {
   };
 
   return (
-    <footer id="location" className="relative w-full bg-[#040a0e] text-white pt-20 pb-12 px-6 sm:px-12 border-t border-white/[0.12]">
-      <div className="max-w-[1400px] mx-auto space-y-12">
+    <footer className="bg-[#1A0F0A] text-[#F5EFEB] pt-14 pb-10 border-t border-white/5 px-[10px]">
+      <div className="max-w-[1360px] mx-auto flex flex-col items-center text-center">
         
-        {/* Top Centered Brand Logo & Tagline */}
-        <div className="text-center space-y-3 max-w-xl mx-auto">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/media/White%20logo.png"
+        {/* Brand Logo (White version) */}
+        <div className="relative h-12 w-36 mb-4">
+          <Image
+            src={media.logoWhiteFull}
             alt="Lake Escape"
-            className="h-14 mx-auto object-contain"
+            fill
+            className="object-contain"
           />
-          <p className="font-sans text-xs font-medium text-slate-400 tracking-[-0.01em]">
-            The Ultra-Luxury Floating Resort • Tehri Lake, Uttarakhand
-          </p>
         </div>
 
-        {/* 3-Column Info & Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 border-y border-white/[0.12] py-10">
-          
-          {/* Column 1: Location & Coordinates */}
-          <div className="space-y-3">
-            <span className="font-sans text-[12px] font-bold text-slate-300 uppercase block tracking-[-0.01em]">
-              Anchorage & Location
-            </span>
-            <div className="space-y-2 text-xs font-normal text-slate-300 tracking-[-0.01em]">
-              <p className="flex items-start gap-2.5">
-                <MapPin size={15} className="text-slate-400 shrink-0 mt-0.5" />
-                <span>Koti Colony Bay, Tehri Lake, New Tehri, Uttarakhand 249001, India</span>
-              </p>
-              <p className="flex items-center gap-2.5">
-                <Compass size={15} className="text-slate-400 shrink-0" />
-                <span>30.4002° N, 78.4357° E • Elevation 840m</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Column 2: Quick Links */}
-          <div className="space-y-3 text-center md:text-left">
-            <span className="font-sans text-[12px] font-bold text-slate-300 uppercase block tracking-[-0.01em]">
-              Navigation
-            </span>
-            <div className="grid grid-cols-2 gap-2 text-xs font-semibold tracking-[-0.01em] text-slate-300">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link href="/profile" className="hover:text-white transition-colors">
-                Guest Portal
-              </Link>
-              <Link href="/booking" className="hover:text-white transition-colors">
-                Reserve Suite
-              </Link>
-            </div>
-          </div>
-
-          {/* Column 3: Direct Reservations */}
-          <div className="space-y-3 md:text-right">
-            <span className="font-sans text-[12px] font-bold text-slate-300 uppercase block tracking-[-0.01em]">
-              Direct Concierge
-            </span>
-            <div className="space-y-2 text-xs font-normal text-slate-300 tracking-[-0.01em]">
-              <p className="flex items-center gap-2.5 justify-start md:justify-end">
-                <Phone size={14} className="text-slate-400 shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-white transition">+91 98765 43210</a>
-              </p>
-              <p className="flex items-center gap-2.5 justify-start md:justify-end">
-                <Mail size={14} className="text-slate-400 shrink-0" />
-                <a href="mailto:stay@lakeescape.in" className="hover:text-white transition">stay@lakeescape.in</a>
-              </p>
-              <p className="text-[11px] font-sans text-slate-400 pt-1">
-                24/7 Stays & Private Boat Buyout Inquiries
-              </p>
-            </div>
-          </div>
-
+        {/* 3 Top Subheaders / Dots (Reference Image 4 Style) */}
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs uppercase tracking-widest text-[#E6DCCE]/75 font-medium mb-10">
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8C6747]" />
+            Bespoke Staterooms
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8C6747]" />
+            Private Boat Charter
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8C6747]" />
+            Sunset Dining & Cruises
+          </span>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 font-sans text-xs tracking-[-0.01em]">
-          <p>© {new Date().getFullYear()} Lake Escape Resorts. All rights reserved.</p>
+        {/* Clean Center Navigation Links */}
+        <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-normal text-white/80 mb-10">
+          <Link href="/rooms" className="hover:text-white transition-colors">
+            Staterooms
+          </Link>
+          <Link href="/boat-experience" className="hover:text-white transition-colors font-medium text-[#E6DCCE]">
+            Hire My Boat
+          </Link>
+          <Link href="/experiences" className="hover:text-white transition-colors">
+            Experiences
+          </Link>
+          <Link href="/dining" className="hover:text-white transition-colors">
+            Dining
+          </Link>
+          <Link href="/vessel" className="hover:text-white transition-colors">
+            The Vessel
+          </Link>
+          <Link href="/gallery" className="hover:text-white transition-colors">
+            Gallery
+          </Link>
+          <Link href="/contact" className="hover:text-white transition-colors">
+            Contact Us
+          </Link>
+          <Link href="/profile" className="hover:text-white transition-colors">
+            Guest Portal
+          </Link>
+        </nav>
+
+        {/* Social Icons in Rounded Square Tiles (Reference Image 4 Style) */}
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+            aria-label="Instagram"
+          >
+            <Instagram size={18} />
+          </a>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+            aria-label="Facebook"
+          >
+            <Facebook size={18} />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+            aria-label="Twitter"
+          >
+            <Twitter size={18} />
+          </a>
+          <a
+            href="tel:+919876543210"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+            aria-label="Phone Concierge"
+          >
+            <Phone size={18} />
+          </a>
+          <a
+            href="mailto:stay@lakeescape.in"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+            aria-label="Email Inquiries"
+          >
+            <Mail size={18} />
+          </a>
+        </div>
+
+        {/* Horizontal Divider */}
+        <div className="w-full max-w-2xl h-px bg-white/10 mb-8" />
+
+        {/* Bottom Legal Links & Back to Top */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-2xl text-xs text-white/50">
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="hover:text-white/80 transition-colors">
+              Terms & Conditions
+            </Link>
+            <span>|</span>
+            <Link href="/privacy-policy" className="hover:text-white/80 transition-colors">
+              Privacy Policy
+            </Link>
+            <span>|</span>
+            <Link href="/faq" className="hover:text-white/80 transition-colors">
+              Disclosures & FAQs
+            </Link>
+          </div>
 
           <button
             onClick={handleScrollToTop}
-            className="flex items-center gap-2 hover:text-white transition group font-semibold"
+            className="flex items-center gap-1.5 text-white/60 hover:text-white transition-colors"
           >
-            <span>Back to Top</span>
-            <ArrowUp size={13} className="transition-transform duration-200 group-hover:-translate-y-1" />
+            <span>Back to top</span>
+            <ArrowUp size={13} />
           </button>
         </div>
+
+        {/* Copyright */}
+        <p className="text-xs text-white/40 mt-6">
+          © {new Date().getFullYear()} Lake Escape. All Rights Reserved.
+        </p>
 
       </div>
     </footer>

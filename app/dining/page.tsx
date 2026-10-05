@@ -2,135 +2,172 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Utensils, Wine, Coffee, Flame } from "lucide-react";
+import { Utensils, Sparkles, CheckCircle2, ArrowRight, Flame, Wine, Coffee } from "lucide-react";
 import { cuisines } from "@/lib/data";
 
 export default function DiningPage() {
   return (
-    <main className="min-h-screen bg-[#081218] text-white pt-28 pb-32 px-6 sm:px-12 font-sans">
-      <div className="max-w-[1400px] mx-auto space-y-16">
-        
-        {/* ─── HERO ─── */}
-        <section className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-slate-400 uppercase tracking-[-0.01em]">
-            <Utensils size={14} className="text-slate-400" />
-            <span>Floating Deck Gastronomy</span>
+    <main className="bg-[#FBF9F5] text-[#1A0F0A] min-h-screen pt-24 pb-20 px-[10px]">
+      <div className="max-w-[1360px] mx-auto space-y-16">
+
+        {/* Hero Section */}
+        <section className="text-center max-w-3xl mx-auto pt-4 sm:pt-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F5EFEB] text-[10px] font-bold uppercase tracking-wider text-[#8C6747] mb-3 border border-[#2C1A10]/10">
+            <Utensils size={12} />
+            <span>On-Board Gastronomy & Private Chef</span>
           </div>
-          
-          <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-[-0.035em]">
-            Culinary Artistry on the Lake
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-[#1A0F0A] leading-[1.08] mb-4">
+            The table is set<br />
+            <span className="text-[#8C6747]">on the water.</span>
           </h1>
 
-          <p className="font-sans text-sm sm:text-base font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-            Dine surrounded by mountain waters and morning mist. Our dedicated on-board chef prepares bespoke multi-course menus featuring wild-foraged Garhwali ingredients, wood-fired deck grilling, and international wine pairings.
+          <p className="text-xs sm:text-base text-[#1A0F0A]/80 max-w-xl mx-auto leading-relaxed font-normal">
+            Dine surrounded by tranquil alpine waters. Our dedicated on-board chef prepares bespoke multi-course menus featuring wild-foraged Himalayan herbs, mountain trout, and wood-fired deck grilling.
           </p>
-        </section>
 
-        {/* ─── FEATURED BANNER ─── */}
-        <section className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0d1b22] shadow-2xl">
-          <Image
-            src="/images/rooms/suite-room/interior-2.jpg"
-            alt="Lake Escape Private Deck Gastronomy"
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#081218] via-[#081218]/40 to-transparent" />
-          
-          <div className="absolute bottom-8 left-8 right-8 z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="font-sans text-xs font-semibold text-slate-300 uppercase tracking-[-0.01em] block">
-                Signature On-Board Dining
-              </span>
-              <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                Private Chef & Mountain Harvest Menus
-              </h2>
-            </div>
-
-            <Link href="/booking" className="btn btn-primary">
-              Reserve Dining Stay
+          <div className="flex flex-wrap justify-center gap-3 pt-6">
+            <Link
+              href="/boat-experience#charter-pricing"
+              className="btn-brown px-7 py-3 text-xs uppercase tracking-wider font-bold rounded-full shadow-md"
+            >
+              Explore Buyout Dining (₹80k)
+            </Link>
+            <Link
+              href="/rooms"
+              className="btn-white px-7 py-3 text-xs uppercase tracking-wider font-bold rounded-full"
+            >
+              View Staterooms
             </Link>
           </div>
         </section>
 
-        {/* ─── 3 DINING CONCEPTS ─── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Coffee size={22} className="text-slate-300" />
-            </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Daily Sunrise Breakfast Hamper
+        {/* Hero Feature Image */}
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] rounded-3xl overflow-hidden bg-[#1A0F0A] shadow-xl border border-[#2C1A10]/10">
+          <Image
+            src="/images/dining/day.JPG"
+            alt="Lake Escape dining on the open deck"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 text-white max-w-md">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#F5EFEB] mb-1 block">
+              Al Fresco Dining
+            </span>
+            <h3 className="text-xl sm:text-3xl font-medium text-white">
+              Open Bow Deck Breakfast & Barbecue
             </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              Served directly to your private overwater balcony or the bow observation deck, including fresh cold-pressed hill juices, artisan breads, farm butter, and hot herbal brews.
+          </div>
+        </div>
+
+        {/* 3 Dining Pillars */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#2C1A10]/10 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#F5EFEB] text-[#8C6747] flex items-center justify-center">
+              <Coffee size={20} />
+            </div>
+            <h3 className="text-lg font-semibold text-[#1A0F0A]">
+              Sunrise Lake Breakfast
+            </h3>
+            <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
+              Served to your private stateroom balcony or open bow deck. Fresh cold-pressed mountain juices, warm artisan sourdough breads, Himalayan honey, and freshly brewed coffees.
             </p>
           </div>
 
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Flame size={22} className="text-slate-300" />
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#2C1A10]/10 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#F5EFEB] text-[#8C6747] flex items-center justify-center">
+              <Flame size={20} />
             </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Wood-Fired Deck Grills
+            <h3 className="text-lg font-semibold text-[#1A0F0A]">
+              Deck Grills & Wood-Fired Dinner
             </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              Fresh mountain trout, seasonal organic hill vegetables, and Himalayan marinades grilled over charcoal embers under the evening starlight.
+            <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
+              Fresh mountain trout, seasonal hill vegetables, and artisanal Himalayan marinades grilled over charcoal embers on the upper deck under the Garhwal dark sky.
             </p>
           </div>
 
-          <div className="bg-[#0d1b22] border border-white/15 rounded-2xl p-8 space-y-4 shadow-lg">
-            <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white">
-              <Wine size={22} className="text-slate-300" />
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#2C1A10]/10 shadow-xs space-y-3">
+            <div className="w-10 h-10 rounded-full bg-[#F5EFEB] text-[#8C6747] flex items-center justify-center">
+              <Wine size={20} />
             </div>
-            <h3 className="font-heading text-xl font-bold text-white tracking-[-0.02em]">
-              Curated Sommelier Cellar
+            <h3 className="text-lg font-semibold text-[#1A0F0A]">
+              Sunset High Tea Cruise
             </h3>
-            <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-              International vintage wines and mountain fruit cocktails tailored to match each course of your personalized on-board tasting menu.
+            <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
+              4:00 PM – 6:00 PM evening cruise across Tehri Lake. Hand-crafted pastries, savory Garhwali starters, mountain herbal infusions, and bespoke mocktails included with every stay.
             </p>
           </div>
-
         </section>
 
-        {/* ─── SAMPLE DISHES LIST ─── */}
-        <section className="space-y-6">
-          <div className="border-b border-white/[0.12] pb-4">
-            <span className="font-sans text-[11px] font-bold text-slate-400 uppercase tracking-[-0.01em] block">
-              Sample Culinary Diary
-            </span>
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white tracking-[-0.025em] mt-0.5">
-              Heritage Garhwali & Contemporary Plates
-            </h2>
+        {/* Curated Cuisine Gallery */}
+        <section className="bg-white rounded-3xl p-8 sm:p-12 border border-[#2C1A10]/10 shadow-sm space-y-8">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 pb-6 border-b border-[#2C1A10]/10">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#8C6747] mb-1">
+                Seasonal Offerings
+              </p>
+              <h2 className="text-2xl sm:text-4xl font-medium text-[#1A0F0A]">
+                Chef-Crafted Specialties
+              </h2>
+            </div>
+            <p className="text-xs text-[#1A0F0A]/75 max-w-sm font-normal">
+              Every meal is tailored to guest preferences with 100% customizable menus for private boat buyouts.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {cuisines.map((item) => (
-              <div
-                key={item.id}
-                className="bg-[#0d1b22] border border-white/15 rounded-xl p-5 flex gap-5 items-center shadow-sm"
-              >
-                <div className="relative h-24 w-24 rounded-lg overflow-hidden shrink-0 border border-white/10">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {cuisines.map((item, i) => (
+              <div key={i} className="group rounded-2xl overflow-hidden border border-[#2C1A10]/10 bg-[#FBF9F5] shadow-xs flex flex-col justify-between">
+                <div className="relative aspect-[4/3] overflow-hidden bg-[#1A0F0A]">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="space-y-1">
-                  <span className="font-sans text-[10px] font-bold text-slate-400 uppercase tracking-[-0.01em]">
-                    {item.category}
-                  </span>
-                  <h4 className="font-heading text-lg font-bold text-white tracking-[-0.02em]">
-                    {item.name}
-                  </h4>
-                  <p className="font-sans text-xs font-normal text-slate-300 line-clamp-2">
-                    {item.description}
-                  </p>
-                  <span className="font-sans text-xs font-bold text-white block pt-1">
-                    ₹{item.price} • On-Board Selection
-                  </span>
+                <div className="p-4 space-y-1.5 grow flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C6747]">
+                      {item.category}
+                    </span>
+                    <h4 className="text-sm font-semibold text-[#1A0F0A] mt-0.5">
+                      {item.name}
+                    </h4>
+                    <p className="text-xs text-[#1A0F0A]/70 mt-1 line-clamp-2 font-normal">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Inclusions Banner */}
+        <section className="bg-[#1A0F0A] text-white rounded-3xl p-8 sm:p-14 text-center border border-[#1A0F0A] shadow-xl">
+          <div className="max-w-2xl mx-auto space-y-4">
+            <span className="px-3.5 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider border border-white/25 inline-block">
+              All-Inclusive Dining
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-medium text-white">
+              Breakfast, Sunset High Tea & Multi-Course Dinner Included
+            </h2>
+            <p className="text-xs sm:text-sm text-white/90 font-normal leading-relaxed">
+              Every room reservation on Lake Escape includes full chef-curated dining, evening snacks, high tea cruise, and speedboat transfers.
+            </p>
+            <div className="pt-3">
+              <Link
+                href="/rooms"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#1A0F0A] hover:bg-[#F5EFEB] text-xs font-bold uppercase tracking-wider transition shadow-md cursor-pointer"
+              >
+                <span>Reserve Stateroom Experience</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </section>
 

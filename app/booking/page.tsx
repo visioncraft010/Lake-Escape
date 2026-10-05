@@ -2,9 +2,8 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { rooms, RoomData } from "@/lib/data";
+import { rooms } from "@/lib/data";
 import { RoomDetailClient } from "@/components/RoomDetailClient";
-import { Check } from "lucide-react";
 
 function BookingContent() {
   const searchParams = useSearchParams();
@@ -20,28 +19,27 @@ function BookingContent() {
   const activeRoom = rooms.find((r) => r.slug === selectedRoomSlug) || rooms[0];
 
   return (
-    <div className="min-h-screen bg-[#fcfbf9]">
-      {/* Top Suite Selection Bar */}
-      <div className="bg-[#081218] text-white border-b border-white/10 pt-28 pb-4">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-8">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 text-center sm:text-left">
-            Select Your Floating Stateroom
+    <div className="min-h-screen bg-[#FBF9F5]">
+      {/* Room Selection Bar */}
+      <div className="bg-[#1A0F0A] text-white pt-28 pb-6 px-[10px]">
+        <div className="max-w-[1360px] mx-auto">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[#8C6747] mb-3">
+            Choose Stateroom
           </p>
-          <div className="flex flex-wrap justify-center sm:justify-start gap-2.5 sm:gap-4 pb-2">
+          <div className="flex flex-wrap gap-2.5">
             {rooms.map((room) => {
               const isSelected = room.slug === activeRoom.slug;
               return (
                 <button
                   key={room.slug}
                   onClick={() => setSelectedRoomSlug(room.slug)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-200 ${
-                    isSelected
-                      ? "bg-white text-[#081218] shadow-lg scale-105"
-                      : "bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white"
+                  className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                    isSelected 
+                      ? "bg-white text-[#1A0F0A] shadow-md font-bold" 
+                      : "bg-white/10 text-white/80 hover:bg-white/20 border border-white/15"
                   }`}
                 >
-                  {isSelected && <Check size={14} className="text-[#081218]" />}
-                  <span>{room.name}</span>
+                  {room.name}
                 </button>
               );
             })}
@@ -49,7 +47,6 @@ function BookingContent() {
         </div>
       </div>
 
-      {/* Main Triptodream Product Detail & Booking Layout */}
       <RoomDetailClient room={activeRoom} allRooms={rooms} />
     </div>
   );
@@ -58,8 +55,8 @@ function BookingContent() {
 export default function BookingPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#081218] flex items-center justify-center text-white text-sm font-sans">
-        Loading Reservation Desk...
+      <div className="min-h-screen bg-[#FBF9F5] flex items-center justify-center text-[#1A0F0A] text-xs font-semibold">
+        Loading Reservation Engine...
       </div>
     }>
       <BookingContent />

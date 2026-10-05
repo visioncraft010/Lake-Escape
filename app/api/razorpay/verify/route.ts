@@ -19,7 +19,8 @@ export async function POST(req: Request) {
     } else {
       return NextResponse.json({ ok: false, message: "Signature verification failed" }, { status: 400 });
     }
-  } catch (err: any) {
-    return NextResponse.json({ ok: false, error: err?.message || "Verification failed" }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Verification failed";
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
