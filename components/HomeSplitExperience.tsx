@@ -56,10 +56,10 @@ export function HomeSplitExperience() {
 
               <Link
                 href="/experiences"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#1A0F0A] hover:bg-[#F5EFEB] text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+                className="btn-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
               >
                 <span>Curated Experiences</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </Link>
             </div>
 

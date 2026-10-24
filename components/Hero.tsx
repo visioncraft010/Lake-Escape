@@ -87,17 +87,17 @@ export function Hero() {
           </p>
 
           {/* Fast Quick Links */}
-          <div className="flex flex-wrap gap-2 pt-1">
+          <div className="flex flex-wrap gap-2.5 pt-1">
             <Link
               href="/boat-experience"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white text-[11px] font-medium backdrop-blur-sm border border-white/25 transition-all"
+              className="btn-white text-xs font-semibold shadow-md py-2 px-4.5"
             >
-              <Ship size={12} />
+              <Ship size={14} />
               <span>Hire My Boat · ₹80k Buyout (12 Max)</span>
             </Link>
             <Link
               href="/rooms"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/90 text-[11px] font-medium backdrop-blur-sm border border-white/15 transition-all"
+              className="btn-outline-white text-xs font-semibold shadow-md py-2 px-4.5"
             >
               <span>4 Staterooms from ₹18,999</span>
             </Link>
@@ -169,10 +169,10 @@ export function Hero() {
             <div className="px-2 py-1 flex items-center justify-end">
               <button
                 type="submit"
-                className="w-full sm:w-auto py-3 px-6 rounded-full bg-[#1A0F0A] hover:bg-[#2C1A10] text-white font-semibold text-xs sm:text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                className="btn-brown w-full sm:w-auto py-3 px-6 text-xs sm:text-sm tracking-wide shadow-md"
               >
                 <span>Check availability</span>
-                <ArrowRight size={14} className="text-white" />
+                <ArrowRight size={14} />
               </button>
             </div>
           </form>

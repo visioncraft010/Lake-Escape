@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Calendar, Users, Home, ArrowRight } from "lucide-react";
+import { Calendar, Users, Home, ArrowRight, ChevronUp, ChevronDown } from "lucide-react";
 import { rooms } from "@/lib/data";
 
 export function BookingBar() {
@@ -13,6 +13,7 @@ export function BookingBar() {
   const [guests, setGuests] = useState(2);
   const [selectedRoom, setSelectedRoom] = useState("lake-view-suite");
   const [isVisible, setIsVisible] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,9 +39,52 @@ export function BookingBar() {
 
   return (
     <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">
+      
+      {/* Minimize/Maximize Toggle Button */}
+      <div className="flex justify-end mb-1.5 sm:hidden">
+        <button
+          type="button"
+          onClick={() => setIsMinimized(!isMinimized)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A0F0A] text-white text-[10px] font-semibold shadow-lg border border-white/10 transition-all hover:bg-[#2C1A10] cursor-pointer"
+          aria-label={isMinimized ? "Expand booking bar" : "Minimize booking bar"}
+        >
+          {isMinimized ? (
+            <>
+              <ChevronUp size={12} />
+              <span>Open Booking</span>
+            </>
+          ) : (
+            <>
+              <ChevronDown size={12} />
+              <span>Minimize</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Minimized Mobile State: Just a compact pill */}
+      {isMinimized && (
+        <div className="sm:hidden flex items-center justify-between gap-3 bg-white/95 backdrop-blur-md rounded-full px-4 py-2.5 shadow-2xl border border-[#2C1A10]/12">
+          <span className="text-[11px] font-semibold text-[#1A0F0A] truncate">
+            Check availability & reserve
+          </span>
+          <button
+            type="button"
+            onClick={() => setIsMinimized(false)}
+            className="btn-brown py-1.5 px-4 text-[10px] font-semibold flex items-center gap-1 shrink-0"
+          >
+            <span>Book</span>
+            <ArrowRight size={11} />
+          </button>
+        </div>
+      )}
+
+      {/* Full Booking Form - hidden on mobile when minimized */}
       <form
         onSubmit={handleBook}
-        className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full p-2.5 sm:p-2 shadow-2xl border border-[#2C1A10]/12 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#2C1A10]/8 items-center"
+        className={`bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full p-2.5 sm:p-2 shadow-2xl border border-[#2C1A10]/12 grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#2C1A10]/8 items-center ${
+          isMinimized ? "hidden sm:grid" : "grid"
+        }`}
       >
         {/* Stateroom Select */}
         <div className="px-3 py-1.5 col-span-2 sm:col-span-1">

@@ -33,7 +33,7 @@ export function FloatingCTAs() {
         >
           {/* WhatsApp Concierge Button */}
           <a
-            href="https://wa.me/919876543210?text=Hi%20Lake%20Escape,%20I%20would%20like%20to%20enquire%20about%20booking%20a%20stay."
+            href="https://wa.me/919762985044?text=Hi%20Lake%20Escape,%20I%20would%20like%20to%20enquire%20about%20booking%20a%20stay."
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-108 hover:bg-[#20ba5a] transition duration-300"

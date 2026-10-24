@@ -44,10 +44,10 @@ export function HomeCharter() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/boat-experience"
-                className="px-6 py-3 rounded-full bg-[#1A0F0A] hover:bg-[#2C1A10] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
+                className="btn-brown text-xs font-bold uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Hire My Boat Details</span>
-                <ArrowRight size={13} className="text-white" />
+                <ArrowRight size={14} />
               </Link>
               <Link
                 href="/vessel"

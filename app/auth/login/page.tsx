@@ -42,9 +42,9 @@ export default function LoginPage() {
         <div style={{ textAlign: "center" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/Black%20logo.png"
+            src="/media/logo-light-bg.png"
             alt="Lake Escape"
-            style={{ height: "36px", margin: "0 auto 1rem", objectFit: "contain" }}
+            style={{ width: "100px", height: "auto", margin: "0 auto 1.25rem", objectFit: "contain" }}
           />
           <h1 style={{
             fontFamily: "'Libre Baskerville', serif",

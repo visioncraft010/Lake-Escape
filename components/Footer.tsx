@@ -15,7 +15,7 @@ export function Footer() {
       <div className="max-w-[1360px] mx-auto flex flex-col items-center text-center">
         
         {/* Brand Logo (White version) */}
-        <div className="relative h-12 w-36 mb-4">
+        <div className="relative w-[100px] h-[36px] sm:w-[110px] sm:h-[40px] mb-5">
           <Image
             src={media.logoWhiteFull}
             alt="Lake Escape"
@@ -98,7 +98,7 @@ export function Footer() {
             <Twitter size={18} />
           </a>
           <a
-            href="tel:+919876543210"
+            href="tel:+919762985044"
             className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
             aria-label="Phone Concierge"
           >

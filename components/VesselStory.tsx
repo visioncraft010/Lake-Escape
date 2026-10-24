@@ -63,7 +63,7 @@ export function VesselStory() {
           <div className="lg:col-span-4 flex justify-center order-1 lg:order-2">
             <div className="relative w-full max-w-sm sm:max-w-md aspect-[4/5] rounded-xl overflow-hidden border border-white/15 shadow-2xl group">
               <Image
-                src="/images/rooms/suite-room/primary.jpg"
+                src="/images/rooms/suite-room/Suite Room Interior - 1.JPG"
                 alt="Lake Escape Luxury Floating Resort Stateroom"
                 fill
                 className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"

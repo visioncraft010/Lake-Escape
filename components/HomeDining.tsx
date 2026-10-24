@@ -36,10 +36,10 @@ export function HomeDining() {
 
               <Link
                 href="/dining"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#1A0F0A] hover:bg-[#F5EFEB] text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
+                className="btn-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
               >
                 <span>Explore Dining & Menus</span>
-                <ArrowRight size={13} />
+                <ArrowRight size={14} />
               </Link>
             </div>
 

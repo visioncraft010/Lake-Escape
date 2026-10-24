@@ -68,16 +68,16 @@ export function HomeEditorialQuote() {
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Link
                 href="/booking"
-                className="px-7 py-3.5 rounded-full bg-white text-[#1A0F0A] hover:bg-[#F5EFEB] font-semibold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2"
+                className="btn-white text-xs uppercase tracking-wider font-semibold shadow-md"
               >
                 <span>Check Availability & Book</span>
                 <ArrowRight size={14} />
               </Link>
               <Link
                 href="/boat-experience"
-                className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs uppercase tracking-wider border border-white/20 backdrop-blur-sm transition-all"
+                className="btn-outline-white text-xs uppercase tracking-wider font-semibold"
               >
-                Hire My Boat (₹80k)
+                <span>Hire My Boat (₹80k)</span>
               </Link>
             </div>
           </div>

@@ -169,7 +169,7 @@ function CheckoutContent() {
         currency: order.currency,
         name: "Lake Escape Sanctuary",
         description: `Reservation for ${activeRoom.name} (${nights} nights)`,
-        image: "/media/Black%20logo.png",
+        image: "/media/logo-light-bg.png",
         order_id: order.id,
         handler: async function () {
           const fd = new FormData();

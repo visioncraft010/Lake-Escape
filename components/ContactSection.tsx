@@ -75,7 +75,7 @@ export function ContactSection() {
   const c = locale === "hi" ? copy.hi : copy.en;
 
   return (
-    <section id="contact" className="section bg-beige text-matte-black border-t border-matte-black/5 py-24">
+    <section id="contact" className="section bg-beige text-matte-black border-t border-matte-black/5 py-24 px-4 sm:px-6 lg:px-8">
       <div className="container max-w-4xl">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1fr]">
           
@@ -95,7 +95,7 @@ export function ContactSection() {
             <div className="reveal space-y-6">
               <div>
                 <p className="font-poppins text-[9px] font-bold uppercase tracking-widest text-gold">{c.direct}</p>
-                <p className="font-serif text-lg font-light text-olive mt-1">+91 98765 43210</p>
+                <p className="font-serif text-lg font-light text-olive mt-1">+91 97629 85044</p>
                 <p className="font-sans text-[10px] text-matte-black/45 mt-0.5">{c.directSub}</p>
               </div>
 
@@ -106,12 +106,13 @@ export function ContactSection() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/919876543210?text=Hi%20Lake%20Escape,%20I%20would%20like%20to%20enquire%20about%20booking%20a%20stay."
+                  href="https://wa.me/919762985044?text=Hi%20Lake%20Escape,%20I%20would%20like%20to%20enquire%20about%20booking%20a%20stay."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn border border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-cream hover:border-[#25D366] w-full sm:w-auto text-[10px] tracking-wider py-2.5 h-auto min-h-0"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white hover:bg-[#20ba5a] w-full sm:w-auto text-xs font-semibold tracking-wide py-3 px-6 shadow-sm transition-all"
                 >
-                  <MessageSquare size={13} className="fill-current" /> {c.whatsapp}
+                  <MessageSquare size={15} className="fill-current" />
+                  <span>{c.whatsapp}</span>
                 </a>
               </div>
             </div>
@@ -235,7 +236,7 @@ export function ContactSection() {
                 {/* Submit button */}
                 <button 
                   type="submit" 
-                  className="btn btn-olive w-full justify-center text-[10px] tracking-wider py-3 h-auto min-h-0 mt-2"
+                  className="btn-brown w-full justify-center text-xs tracking-wider py-3 mt-2 shadow-md"
                 >
                   {c.submit}
                 </button>

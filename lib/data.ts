@@ -10,10 +10,10 @@ export const media = {
   sunset: "/images/views/sunset-sailing.JPG",
   boatTopdown: "/media/boat-topdown-horizontal.png",
   boatCutout: "/media/boat-cutout.png",
-  logoWhite: "/media/logo-white.png",
-  logoBlack: "/media/logo-black.png",
-  logoWhiteFull: "/media/White logo.png",
-  logoBlackFull: "/media/Black logo.png",
+  logoWhite: "/media/logo-dark-bg.png",
+  logoBlack: "/media/logo-light-bg.png",
+  logoWhiteFull: "/media/logo-dark-bg.png",
+  logoBlackFull: "/media/logo-light-bg.png",
   
   // Skydeck & Starlight Lounge Collection
   skydeckGallery: [

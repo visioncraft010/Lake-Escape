@@ -66,10 +66,10 @@ export function RoomCard({ room }: { room: Room }) {
         <div className="mt-6 flex items-center justify-between border-t border-matte-black/5 pt-4">
           <span className="font-poppins text-[9px] font-bold uppercase tracking-widest text-matte-black/40">Rate / Night</span>
           <Link 
-            className="btn btn-olive h-9 min-h-0 py-0 px-5 text-[11px]" 
+            className="btn-brown h-9 min-h-0 py-0 px-5 text-xs font-semibold shadow-xs" 
             href="/booking"
           >
-            Book Room
+            <span>Book Room</span>
           </Link>
         </div>
       </div>

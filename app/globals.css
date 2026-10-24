@@ -101,7 +101,6 @@ h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 500; }
 h4 { font-size: clamp(1.1rem, 1.8vw, 1.35rem); font-weight: 500; }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
@@ -147,6 +146,12 @@ a {
   text-decoration: none;
 }
 
+.btn-brown *, .btn-brown span, .btn-brown svg,
+.btn-primary *, .btn-primary span, .btn-primary svg {
+  color: #ffffff !important;
+  fill: currentColor;
+}
+
 .btn-brown:hover, .btn-primary:hover {
   background-color: #2c1a10 !important;
   color: #ffffff !important;
@@ -171,11 +176,48 @@ a {
   text-decoration: none;
 }
 
+.btn-white *, .btn-white span, .btn-white svg {
+  color: #1a0f0a !important;
+  fill: currentColor;
+}
+
 .btn-white:hover {
   background-color: #f5efeb !important;
   color: #1a0f0a !important;
   border-color: #1a0f0a;
   transform: translateY(-1px);
+}
+
+.btn-white:hover *, .btn-white:hover span, .btn-white:hover svg {
+  color: #1a0f0a !important;
+}
+
+.btn-outline-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(26, 15, 10, 0.5) !important;
+  color: #ffffff !important;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-outline-white *, .btn-outline-white span, .btn-outline-white svg {
+  color: #ffffff !important;
+  fill: currentColor;
+}
+
+.btn-outline-white:hover {
+  background-color: rgba(26, 15, 10, 0.8) !important;
+  border-color: #ffffff;
 }
 
 /* ── Modern Card ── */

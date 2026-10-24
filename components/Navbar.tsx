@@ -100,15 +100,15 @@ export function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || !isHome
-            ? "bg-white/95 backdrop-blur-md shadow-xs border-b border-[#2C1A10]/8 py-3"
-            : "bg-white/80 backdrop-blur-sm border-b border-[#2C1A10]/5 py-4"
+            ? "bg-white/95 backdrop-blur-md shadow-xs border-b border-[#2C1A10]/8 py-1.5"
+            : "bg-white/80 backdrop-blur-sm border-b border-[#2C1A10]/5 py-2"
         }`}
       >
         <div className="max-w-[1360px] mx-auto px-[10px] flex items-center justify-between gap-4">
           
           {/* Left: Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="relative h-10 w-28 sm:h-11 sm:w-32">
+          <Link href="/" className="flex items-center shrink-0 group">
+            <div className="relative w-[95px] h-[34px] sm:w-[100px] sm:h-[36px]">
               <Image
                 src={media.logoBlackFull}
                 alt="Lake Escape"
@@ -246,7 +246,7 @@ export function Navbar() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="relative h-9 w-28 sm:h-10 sm:w-32"
+              className="relative w-[95px] h-[34px] sm:w-[100px] sm:h-[36px] shrink-0"
             >
               <Image
                 src={media.logoWhiteFull}
