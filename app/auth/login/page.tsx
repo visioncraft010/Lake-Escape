@@ -43,9 +43,24 @@ function LoginForm() {
         body: JSON.stringify({ phone, password }),
       });
 
-      const data = await res.json();
+      let data: { error?: string; user?: { role?: string }; message?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        const text = await res.text().catch(() => "");
+        setErrorMessage(
+          res.status === 404
+            ? "API route not found (404). Please ensure Hostinger is running Next.js as a Node.js web app."
+            : res.status === 502 || res.status === 503
+            ? `Server unavailable (${res.status}). The Node.js application process is restarting on Hostinger.`
+            : `Server error (${res.status}): ${text.slice(0, 80) || "Invalid response"}`
+        );
+        setIsLoading(false);
+        return;
+      }
+
       if (!res.ok) {
-        setErrorMessage(data.error || "Login failed. Please check your credentials.");
+        setErrorMessage(data.error || `Login failed (${res.status}). Please check your credentials.`);
         setIsLoading(false);
         return;
       }
@@ -59,8 +74,9 @@ function LoginForm() {
         router.push("/profile");
       }
       router.refresh();
-    } catch {
-      setErrorMessage("Network error. Please try again.");
+    } catch (err: unknown) {
+      console.error("Login fetch error:", err);
+      setErrorMessage((err as Error)?.message ? `Connection error: ${(err as Error).message}` : "Network error. Please try again.");
       setIsLoading(false);
     }
   };

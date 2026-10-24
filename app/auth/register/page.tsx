@@ -104,9 +104,24 @@ function RegisterForm() {
         }),
       });
 
-      const data = await res.json();
+      let data: { error?: string; message?: string; devCode?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        const text = await res.text().catch(() => "");
+        setGlobalError(
+          res.status === 404
+            ? "API route not found (404). Please ensure Hostinger is running Next.js as a Node.js web app."
+            : res.status === 502 || res.status === 503
+            ? `Server unavailable (${res.status}). Node.js process is restarting on Hostinger.`
+            : `Server error (${res.status}): ${text.slice(0, 80) || "Invalid server response"}`
+        );
+        setOtpLoading(false);
+        return;
+      }
+
       if (!res.ok) {
-        setGlobalError(data.error || "Failed to dispatch verification code.");
+        setGlobalError(data.error || `Failed to dispatch verification code (${res.status}).`);
         setOtpLoading(false);
         return;
       }
@@ -116,8 +131,9 @@ function RegisterForm() {
       if (data.devCode) {
         setDevOtpNotice(`[Dev Mode] Verification Code: ${data.devCode}`);
       }
-    } catch {
-      setGlobalError("Network error. Please check your internet connection.");
+    } catch (err: unknown) {
+      console.error("OTP send error:", err);
+      setGlobalError((err as Error)?.message ? `Connection error: ${(err as Error).message}` : "Network error. Please check your internet connection.");
     } finally {
       setOtpLoading(false);
     }
@@ -145,9 +161,18 @@ function RegisterForm() {
         }),
       });
 
-      const data = await res.json();
+      let data: { error?: string; message?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        const text = await res.text().catch(() => "");
+        setOtpError(`Server error (${res.status}): ${text.slice(0, 80) || "Invalid server response"}`);
+        setOtpLoading(false);
+        return;
+      }
+
       if (!res.ok) {
-        setOtpError(data.error || "Invalid verification code.");
+        setOtpError(data.error || `Invalid verification code (${res.status}).`);
         setOtpLoading(false);
         return;
       }
@@ -165,8 +190,9 @@ function RegisterForm() {
         setOtpSuccessMessage("");
         setDevOtpNotice("");
       }, 600);
-    } catch {
-      setOtpError("Network error. Please try again.");
+    } catch (err: unknown) {
+      console.error("OTP verify error:", err);
+      setOtpError((err as Error)?.message ? `Connection error: ${(err as Error).message}` : "Network error. Please try again.");
     } finally {
       setOtpLoading(false);
     }
@@ -213,9 +239,18 @@ function RegisterForm() {
         }),
       });
 
-      const data = await res.json();
+      let data: { error?: string; message?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        const text = await res.text().catch(() => "");
+        setGlobalError(`Server error (${res.status}): ${text.slice(0, 80) || "Invalid server response"}`);
+        setRegisterLoading(false);
+        return;
+      }
+
       if (!res.ok) {
-        setGlobalError(data.error || "Registration failed.");
+        setGlobalError(data.error || `Registration failed (${res.status}).`);
         setRegisterLoading(false);
         return;
       }
@@ -224,8 +259,9 @@ function RegisterForm() {
       const targetUrl = redirectParam || "/profile";
       router.push(targetUrl);
       router.refresh();
-    } catch {
-      setGlobalError("Network error. Please try again.");
+    } catch (err: unknown) {
+      console.error("Register error:", err);
+      setGlobalError((err as Error)?.message ? `Connection error: ${(err as Error).message}` : "Network error. Please try again.");
       setRegisterLoading(false);
     }
   };
