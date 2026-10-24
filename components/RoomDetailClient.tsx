@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Star, Share2, Heart, MapPin, Check, 
   ArrowRight, ChevronRight, X, ChevronLeft,
@@ -19,8 +20,12 @@ interface RoomDetailClientProps {
 }
 
 export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
+  const router = useRouter();
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
+
+  // User session state
+  const [currentUser, setCurrentUser] = useState<{ id: string; name?: string; email?: string; phone?: string } | null>(null);
 
   // Booking states
   const [checkIn, setCheckIn] = useState("2026-10-15");
@@ -38,6 +43,20 @@ export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
   const [bookingRef, setBookingRef] = useState<string | null>(null);
   const [bookingError, setBookingError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated && data.user) {
+          setCurrentUser(data.user);
+          if (data.user.name) setGuestName(data.user.name);
+          if (data.user.email) setGuestEmail(data.user.email);
+          if (data.user.phone) setGuestPhone(data.user.phone);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Dynamic Live Calculations
   const nights = calculateNights(checkIn, checkOut);
@@ -74,6 +93,23 @@ export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
       if (res.ok) {
         setBookingSuccess(`Your stay in ${room.name} has been confirmed successfully!`);
         setBookingRef(res.bookingId || `LE-${Date.now().toString(36).toUpperCase()}`);
+
+        // Dispatch Email Alert to Resort Desk and Guest
+        fetch("/api/enquiry", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: guestName,
+            email: guestEmail,
+            phone: guestPhone,
+            checkIn,
+            checkOut,
+            guests: guestsCount,
+            room: room.name,
+            specialRequests: specialRequests || `Instant Booking #${res.bookingId}`,
+            source: "Direct Instant Stateroom Reservation"
+          })
+        }).catch((err) => console.warn("Email alert error:", err));
       } else {
         setBookingError(res.message || "Could not complete reservation. Please verify your details.");
       }
@@ -82,6 +118,15 @@ export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleInstantReserveClick = () => {
+    if (!currentUser) {
+      const redirectUrl = `/booking?room=${room.slug}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guestsCount}`;
+      router.push(`/auth/login?redirect=${encodeURIComponent(redirectUrl)}`);
+      return;
+    }
+    setShowBookingModal(true);
   };
 
   return (
@@ -277,7 +322,7 @@ export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
 
                 <div className="space-y-2 pt-1">
                   <button
-                    onClick={() => setShowBookingModal(true)}
+                    onClick={handleInstantReserveClick}
                     className="w-full py-3 text-xs justify-center font-bold uppercase tracking-wider rounded-full bg-[#1A0F0A] hover:bg-[#2C1A10] text-white shadow-md transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <span>Instant Reserve Stateroom</span>
@@ -540,7 +585,7 @@ export function RoomDetailClient({ room, allRooms }: RoomDetailClientProps) {
 
               <div className="space-y-2">
                 <button
-                  onClick={() => setShowBookingModal(true)}
+                  onClick={handleInstantReserveClick}
                   className="w-full py-3.5 text-xs justify-center font-bold uppercase tracking-wider rounded-full bg-[#1A0F0A] hover:bg-[#2C1A10] text-white shadow-md transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <span>Instant Reserve Stateroom</span>

@@ -3,8 +3,52 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  name           String
+  phone          String        @unique
+  phoneVerified  Boolean       @default(false)
+  email          String        @unique
+  emailVerified  Boolean       @default(false)
+  passwordHash   String
+  role                UserRole      @default(GUEST)
+  
+  // Optional Guest Profile & Stay Personalization
+  avatarUrl           String?
+  dietaryPreference   String?       // "Vegetarian", "Jain", "Vegan", "Non-Vegetarian", "Halal", "Gluten-Free", etc.
+  dietaryNotes        String?       // Allergies (e.g., peanuts, lactose, shellfish)
+  celebrationDate     String?       // Birthday or Anniversary for complimentary arrangements
+  emergencyContact    String?       // Emergency Contact Name & Phone
+  idTypeNumber        String?       // Govt ID / Passport for expedited boarding
+  specialPreferences  String?       // Pillow preference, room location, morning beverage
+
+  bookings            Booking[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+enum UserRole {
+  GUEST
+  STAFF
+  ADMIN
+}
+
+model OtpVerification {
+  id         String     @id @default(cuid())
+  target     String     // Phone number or email
+  type       String     // "PHONE" or "EMAIL"
+  code       String     // 6-digit verification code
+  purpose    String     // "SIGNUP" or "RESET_PASSWORD"
+  expiresAt  DateTime
+  verified   Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+
+  @@index([target, purpose])
 }
 
 model Room {
@@ -19,18 +63,23 @@ model Room {
 }
 
 model Booking {
-  id        String        @id @default(cuid())
-  roomId    String
-  room      Room          @relation(fields: [roomId], references: [id])
-  guestName String
-  email     String
-  phone     String
-  checkIn   DateTime
-  checkOut  DateTime
-  guests    Int
-  total     Int
-  status    BookingStatus @default(PENDING)
-  createdAt DateTime      @default(now())
+  id              String        @id @default(cuid())
+  userId          String?
+  user            User?         @relation(fields: [userId], references: [id])
+  roomId          String
+  room            Room          @relation(fields: [roomId], references: [id])
+  guestName       String
+  email           String
+  phone           String
+  checkIn         DateTime
+  checkOut        DateTime
+  guests          Int
+  total           Int
+  paymentId       String?
+  specialRequests String?
+  status          BookingStatus @default(CONFIRMED)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model Coupon {
@@ -54,6 +103,8 @@ model Cuisine {
 enum BookingStatus {
   PENDING
   CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
   CANCELLED
   COMPLETED
 }

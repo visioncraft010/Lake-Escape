@@ -19,6 +19,8 @@ interface ContactFormInput {
 export function ContactSection() {
   const { t, locale } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { register, handleSubmit, reset } = useForm<ContactFormInput>({
     defaultValues: {
       guests: 2,
@@ -26,13 +28,40 @@ export function ContactSection() {
     }
   });
 
-  const onSubmit = (data: ContactFormInput) => {
-    console.log("Enquiry Data:", data);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      reset();
-    }, 6000);
+  const onSubmit = async (data: ContactFormInput) => {
+    setIsSubmitting(true);
+    setErrorMessage("");
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          contact: data.contact,
+          checkIn: data.checkIn,
+          checkOut: data.checkOut,
+          guests: data.guests,
+          room: data.room,
+          notes: data.notes,
+          source: "Lake Escape Sanctuary Reservation Section"
+        })
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        setErrorMessage(result.error || "Failed to submit enquiry. Please try again.");
+      } else {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          reset();
+        }, 8000);
+      }
+    } catch {
+      setErrorMessage("Network error. Please check your connection or contact our concierge directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const copy = {
@@ -101,7 +130,12 @@ export function ContactSection() {
 
               <div>
                 <p className="font-poppins text-[9px] font-bold uppercase tracking-widest text-gold">{c.email}</p>
-                <p className="font-serif text-lg font-light text-olive mt-1">stay@lakeescape.in</p>
+                <a
+                  href="mailto:stay@lakeescape.in"
+                  className="font-serif text-lg font-light text-olive mt-1 hover:underline block transition-colors"
+                >
+                  stay@lakeescape.in
+                </a>
               </div>
 
               <div className="pt-2">
@@ -233,12 +267,26 @@ export function ContactSection() {
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+                    {errorMessage}
+                  </div>
+                )}
+
                 {/* Submit button */}
                 <button 
                   type="submit" 
-                  className="btn-brown w-full justify-center text-xs tracking-wider py-3 mt-2 shadow-md"
+                  disabled={isSubmitting}
+                  className="btn-brown w-full justify-center text-xs tracking-wider py-3 mt-2 shadow-md disabled:opacity-50 flex items-center gap-2"
                 >
-                  {c.submit}
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Transmitting Enquiry...</span>
+                    </>
+                  ) : (
+                    c.submit
+                  )}
                 </button>
               </form>
             )}

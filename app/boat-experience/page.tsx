@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Ship, 
   Wind, 
@@ -12,7 +13,9 @@ import {
   Sparkles, 
   CheckCircle2, 
   Clock, 
-  Send
+  Send,
+  Lock,
+  ArrowRight
 } from "lucide-react";
 import { createBooking } from "@/actions/booking";
 
@@ -41,6 +44,9 @@ const inclusions = [
 ];
 
 export default function BoatExperiencePage() {
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<{ id: string; name?: string; email?: string; phone?: string } | null>(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,8 +62,31 @@ export default function BoatExperiencePage() {
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
   const [bookingError, setBookingError] = useState<string | null>(null);
 
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated && data.user) {
+          setCurrentUser(data.user);
+          setFormData((prev) => ({
+            ...prev,
+            name: data.user.name || prev.name,
+            email: data.user.email || prev.email,
+            phone: data.user.phone || prev.phone,
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!currentUser) {
+      router.push(`/auth/login?redirect=${encodeURIComponent("/boat-experience#charter-inquiry")}`);
+      return;
+    }
+
     setIsSubmitting(true);
     setBookingError(null);
     setBookingSuccess(null);
@@ -70,11 +99,29 @@ export default function BoatExperiencePage() {
     fd.append("checkOut", formData.checkOut);
     fd.append("guests", formData.guests);
     fd.append("roomSlug", formData.charterType === "sunset-cruise" ? "lake-view-suite" : "presidential-suite");
+    if (formData.specialRequests) fd.append("specialRequests", formData.specialRequests);
 
     try {
       const res = await createBooking(fd);
       if (res.ok) {
         setBookingSuccess(`Your charter reservation request has been registered successfully. Booking Ref: ${res.bookingId}`);
+
+        // Dispatch Email Alert via /api/enquiry to hotel management and guest
+        fetch("/api/enquiry", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            checkIn: formData.checkIn,
+            checkOut: formData.checkOut,
+            guests: formData.guests,
+            room: formData.charterType === "whole-boat" ? "Whole Vessel Private Buyout" : "Sunset High Tea Cruise",
+            specialRequests: formData.specialRequests || `Charter Booking #${res.bookingId}`,
+            source: "Hire My Boat Charter Reservation"
+          })
+        }).catch((err) => console.warn("Email alert error:", err));
       } else {
         setBookingError(res.message || "Could not complete charter request. Please check your information.");
       }
@@ -450,6 +497,29 @@ export default function BoatExperiencePage() {
               <div className="mb-6 p-4 rounded-xl bg-rose-950/90 border border-rose-500/60 text-rose-100 text-xs flex items-center gap-3">
                 <Sparkles size={18} className="shrink-0 text-rose-400" />
                 <span className="font-medium">{bookingError}</span>
+              </div>
+            )}
+
+            {!currentUser && (
+              <div className="mb-6 p-4 rounded-2xl bg-white/10 border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <div className="flex items-center gap-3">
+                  <Lock size={16} className="text-[#F5EFEB] shrink-0" />
+                  <span className="text-white/90">Authentication Required: Please sign in or register to reserve this vessel. You will return here immediately.</span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={`/auth/login?redirect=${encodeURIComponent("/boat-experience#charter-inquiry")}`}
+                    className="px-4 py-2 rounded-full bg-white text-[#1A0F0A] font-bold text-xs hover:bg-[#F5EFEB] transition shadow-md"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href={`/auth/register?redirect=${encodeURIComponent("/boat-experience#charter-inquiry")}`}
+                    className="px-4 py-2 rounded-full bg-white/20 text-white font-bold text-xs hover:bg-white/30 transition border border-white/30"
+                  >
+                    Register
+                  </Link>
+                </div>
               </div>
             )}
 

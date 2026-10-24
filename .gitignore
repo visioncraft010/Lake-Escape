@@ -41,6 +41,9 @@ public/images/*.mp4
 public/images/**/*.MP4
 public/images/**/*.mp4
 public/images/*.DNG
-public/images/*.dng
 public/images/lake escape.pdf
 public/media/showreel-mobile.mp4
+
+# Antigravity IDE
+.agents/
+skills-lock.json

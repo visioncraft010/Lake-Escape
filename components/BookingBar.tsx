@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Calendar, Users, Home, ArrowRight, ChevronUp, ChevronDown } from "lucide-react";
 import { rooms } from "@/lib/data";
 
 export function BookingBar() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [checkIn, setCheckIn] = useState("2026-10-15");
   const [checkOut, setCheckOut] = useState("2026-10-17");
@@ -35,7 +36,17 @@ export function BookingBar() {
     router.push(`/booking?${params.toString()}`);
   };
 
-  if (!isVisible) return null;
+  // Do not show sticky bar on login/auth, guest portal (/profile), or admin screens
+  const isHiddenPage =
+    !pathname ||
+    pathname.startsWith("/auth") ||
+    pathname === "/profile" ||
+    pathname.startsWith("/profile") ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/register");
+
+  if (!isVisible || isHiddenPage) return null;
 
   return (
     <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">

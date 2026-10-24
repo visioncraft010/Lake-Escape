@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { rooms } from "@/lib/data";
 import { calculateNights } from "@/lib/utils";
+import { getCurrentUser } from "@/lib/auth";
 
 const bookingSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -96,9 +97,12 @@ export async function createBooking(formData: FormData) {
         });
       }
 
+      const currentUser = await getCurrentUser();
+
       const booking = await prisma.booking.create({
         data: {
           roomId: dbRoom?.id || "lake-escape-general",
+          userId: currentUser?.id || undefined,
           guestName: name,
           email,
           phone,
@@ -106,7 +110,8 @@ export async function createBooking(formData: FormData) {
           checkOut: new Date(checkOut),
           guests,
           total: totalAmount,
-          status: "PENDING"
+          specialRequests: specialRequests || undefined,
+          status: "CONFIRMED"
         }
       });
 

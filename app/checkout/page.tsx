@@ -43,6 +43,7 @@ function CheckoutContent() {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingRef, setBookingRef] = useState("");
   const [paymentError, setPaymentError] = useState("");
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   useEffect(() => {
     const r = searchParams?.get("room");
@@ -55,6 +56,32 @@ function CheckoutContent() {
     if (co) setCheckOut(co);
     if (g) setGuestsCount(Number(g) || 2);
 
+    // Check user authentication
+    async function verifyAuth() {
+      try {
+        const authRes = await fetch("/api/auth/me");
+        const authData = await authRes.json();
+        if (!authData.authenticated || !authData.user) {
+          const redirectTarget = `/checkout?room=${r || "lake-view-suite"}&checkIn=${ci || "2026-10-15"}&checkOut=${co || "2026-10-17"}&guests=${g || "2"}`;
+          router.push(`/auth/login?redirect=${encodeURIComponent(redirectTarget)}`);
+          return;
+        }
+
+        // Pre-fill user data
+        if (authData.user) {
+          if (authData.user.name) setGuestName(authData.user.name);
+          if (authData.user.email) setGuestEmail(authData.user.email);
+          if (authData.user.phone) setGuestPhone(authData.user.phone);
+        }
+      } catch {
+        // Fallback
+      } finally {
+        setIsAuthChecking(false);
+      }
+    }
+
+    verifyAuth();
+
     // Dynamically load Razorpay Checkout Script
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -66,7 +93,7 @@ function CheckoutContent() {
         document.body.removeChild(script);
       }
     };
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const activeRoom: RoomData = rooms.find((r) => r.slug === roomSlug) || rooms[0];
 
@@ -211,6 +238,19 @@ function CheckoutContent() {
       handleDirectReservation();
     }
   };
+
+  if (isAuthChecking) {
+    return (
+      <main className="min-h-screen bg-[#FBF9F5] flex items-center justify-center p-4">
+        <div className="text-center space-y-3">
+          <div className="w-8 h-8 border-2 border-[#1A0F0A] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs uppercase font-bold tracking-widest text-[#8C6747]">
+            Securing Your Reservation Portal...
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   if (bookingSuccess) {
     return (
