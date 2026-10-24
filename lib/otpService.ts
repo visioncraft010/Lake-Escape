@@ -54,7 +54,7 @@ export async function sendEmailOtp(email: string, code: string, purpose: string)
   if (resend) {
     try {
       const response = await resend.emails.send({
-        from: "Lake Escape <onboarding@resend.dev>", // Or custom domain once configured on Resend
+        from: process.env.RESEND_FROM_EMAIL || "Lake Escape <onboarding@resend.dev>",
         to: email,
         subject,
         html,

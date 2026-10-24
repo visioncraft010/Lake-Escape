@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       }
     ]
   },
+  serverExternalPackages: ["@prisma/client", "prisma"],
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"]
   }

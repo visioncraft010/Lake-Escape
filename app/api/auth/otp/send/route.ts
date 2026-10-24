@@ -67,8 +67,22 @@ export async function POST(req: Request) {
     let dispatchResult: { success: boolean; message?: string } = { success: true };
     if (cleanType === "EMAIL") {
       dispatchResult = await sendEmailOtp(cleanTarget, code, cleanPurpose);
+      if (!dispatchResult.success) {
+        console.error(`[OTP Send] Email dispatch failed to ${cleanTarget}:`, dispatchResult.message);
+        return NextResponse.json(
+          { error: dispatchResult.message || "Failed to deliver verification email. Please check your email address." },
+          { status: 502 }
+        );
+      }
     } else {
       dispatchResult = await sendPhoneOtp(cleanTarget, code, cleanPurpose);
+      if (!dispatchResult.success) {
+        console.error(`[OTP Send] SMS dispatch failed to ${cleanTarget}:`, dispatchResult.message);
+        return NextResponse.json(
+          { error: dispatchResult.message || "Failed to deliver SMS verification code. Please check your mobile number." },
+          { status: 502 }
+        );
+      }
     }
 
     const isDev = process.env.NODE_ENV !== "production";
