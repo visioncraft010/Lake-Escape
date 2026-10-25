@@ -87,12 +87,13 @@ export async function POST(req: Request) {
 
     const isDev = process.env.NODE_ENV !== "production";
     const resendApiKey = process.env.RESEND_API_KEY;
+    const fast2SmsKey = process.env.FAST2SMS_API_KEY;
 
     return NextResponse.json({
       success: true,
       message: `Verification code sent to ${cleanTarget}`,
-      // In local development or if testing without paid SMS keys, return devCode for seamless instant testing
-      ...(isDev || !resendApiKey ? { devCode: code } : {}),
+      // In development or if SMS provider is not yet configured, return devCode for seamless instant verification
+      ...(isDev || !resendApiKey || (cleanType === "PHONE" && !fast2SmsKey) ? { devCode: code } : {}),
     });
   } catch (error: unknown) {
     console.error("Error in /api/auth/otp/send:", error);

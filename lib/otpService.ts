@@ -1,5 +1,4 @@
 import { Resend } from "resend";
-import prisma from "@/lib/prisma";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -53,12 +52,25 @@ export async function sendEmailOtp(email: string, code: string, purpose: string)
 
   if (resend) {
     try {
-      const response = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || "Lake Escape <info@lakeescape.in>",
+      const preferredFrom = process.env.RESEND_FROM_EMAIL || "Lake Escape <info@lakeescape.in>";
+      let response = await resend.emails.send({
+        from: preferredFrom,
         to: email,
         subject,
         html,
       });
+
+      // If custom domain is not yet verified on Resend, retry once with sandbox sender
+      if (response.error && (response.error.message?.toLowerCase().includes("domain") || response.error.name === "validation_error")) {
+        console.warn(`Resend custom domain notice: ${response.error.message}. Retrying with sandbox onboarding@resend.dev...`);
+        response = await resend.emails.send({
+          from: "Lake Escape <onboarding@resend.dev>",
+          to: email,
+          subject,
+          html,
+        });
+      }
+
       if (response.error) {
         console.warn("Resend email delivery notice:", response.error);
         return { success: false, message: response.error.message };
