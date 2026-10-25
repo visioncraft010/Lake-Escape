@@ -131,10 +131,10 @@ export function ContactSection() {
               <div>
                 <p className="font-poppins text-[9px] font-bold uppercase tracking-widest text-gold">{c.email}</p>
                 <a
-                  href="mailto:stay@lakeescape.in"
+                  href="mailto:info@lakeescape.in"
                   className="font-serif text-lg font-light text-olive mt-1 hover:underline block transition-colors"
                 >
-                  stay@lakeescape.in
+                  info@lakeescape.in
                 </a>
               </div>
 

@@ -105,7 +105,7 @@ export function Footer() {
             <Phone size={18} />
           </a>
           <a
-            href="mailto:stay@lakeescape.in"
+            href="mailto:info@lakeescape.in"
             className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
             aria-label="Email Inquiries"
           >

@@ -29,8 +29,8 @@ export async function POST(req: Request) {
     const guestPhone = phone || (contact && !contact.includes("@") ? contact : contact || "Not specified");
     const requestedRoom = room || "General Sanctuary Stay";
     const guestRequests = specialRequests || notes || "No special requests specified.";
-    const hotelRecipient = process.env.HOTEL_NOTIFICATION_EMAIL || "stay@lakeescape.in";
-    const fromAddress = process.env.RESEND_FROM_EMAIL || "Lake Escape <onboarding@resend.dev>";
+    const hotelRecipient = process.env.HOTEL_NOTIFICATION_EMAIL || "info@lakeescape.in";
+    const fromAddress = process.env.RESEND_FROM_EMAIL || "Lake Escape <info@lakeescape.in>";
 
     // Luxury HTML Email Template for Resort Desk
     const hotelNotificationHtml = `
