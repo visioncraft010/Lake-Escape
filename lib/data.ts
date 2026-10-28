@@ -553,11 +553,11 @@ export const galleryPhotos: GalleryPhotoItem[] = [
   },
   {
     id: "gal-view-3",
-    src: "/images/views/sunset.png",
-    title: "Tehri Twilight Horizon",
+    src: "/images/views/night-view.jpg",
+    title: "Tehri Night Horizon",
     category: "views",
     categoryLabel: "Views",
-    description: "Dusk descending over the Garhwal mountain ridges."
+    description: "The illuminated Dobra Chanti Bridge glowing over Tehri Lake under the starlit alpine sky."
   }
 ];
 
