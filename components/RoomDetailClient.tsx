@@ -8,7 +8,7 @@ import {
   Star, Share2, Heart, MapPin, Check, 
   ArrowRight, ChevronRight, X, ChevronLeft,
   Sparkles, ShieldCheck, Compass, CheckCircle2,
-  Navigation, Send, Phone, Mail, User
+  Navigation, Send
 } from "lucide-react";
 import { RoomData } from "@/lib/data";
 import { formatCurrency, calculateNights } from "@/lib/utils";

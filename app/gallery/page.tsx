@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Play, Maximize2, Camera, Film, Sparkles, Filter } from "lucide-react";
-import { galleryPhotos, GalleryPhotoItem } from "@/lib/data";
+import { Play, Maximize2, Camera, Film } from "lucide-react";
+import { galleryPhotos } from "@/lib/data";
 import { useLightbox } from "@/providers/LightboxProvider";
 
 export default function GalleryPage() {

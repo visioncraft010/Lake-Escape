@@ -1,5 +1,3 @@
-import { Bike, Sparkles, Sun, Utensils } from "lucide-react";
-
 export const media = {
   heroVideoDesktop: "/media/hero-desktop-compressed.mp4",
   heroVideoMobile: "/media/hero-mobile-compressed.mp4",

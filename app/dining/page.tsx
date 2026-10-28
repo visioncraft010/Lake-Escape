@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Utensils, Sparkles, CheckCircle2, ArrowRight, Flame, Coffee, Heart } from "lucide-react";
+import { Utensils, Sparkles, ArrowRight, Flame, Coffee } from "lucide-react";
 import { cuisines } from "@/lib/data";
 
 export default function DiningPage() {
@@ -82,7 +82,7 @@ export default function DiningPage() {
               <Flame size={20} />
             </div>
             <h3 className="text-lg font-semibold text-[#1A0F0A]">
-              Chef's Artisanal Dinner & Himalayan Delicacies
+              Chef&apos;s Artisanal Dinner & Himalayan Delicacies
             </h3>
             <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
               Fresh mountain trout, seasonal hill vegetables, and artisanal Himalayan marinades delicately prepared by our chef under the Garhwal dark sky.

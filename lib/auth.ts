@@ -1,7 +1,6 @@
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-import prisma from "@/lib/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "lake_escape_sanctuary_secret_jwt_2026";
 const COOKIE_NAME = "lake_escape_token";
