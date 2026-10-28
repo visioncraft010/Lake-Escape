@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Utensils, Sparkles, CheckCircle2, ArrowRight, Flame, Wine, Coffee } from "lucide-react";
+import { Utensils, Sparkles, CheckCircle2, ArrowRight, Flame, Coffee, Heart } from "lucide-react";
 import { cuisines } from "@/lib/data";
 
 export default function DiningPage() {
@@ -23,7 +23,7 @@ export default function DiningPage() {
           </h1>
 
           <p className="text-xs sm:text-base text-[#1A0F0A]/80 max-w-xl mx-auto leading-relaxed font-normal">
-            Dine surrounded by tranquil alpine waters. Our dedicated on-board chef prepares bespoke multi-course menus featuring wild-foraged Himalayan herbs, mountain trout, and wood-fired deck grilling.
+            Dine surrounded by tranquil alpine waters. Our dedicated on-board chef prepares bespoke multi-course menus featuring wild-foraged Himalayan herbs, mountain trout, and handcrafted gourmet dining.
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 pt-6">
@@ -58,7 +58,7 @@ export default function DiningPage() {
               Al Fresco Dining
             </span>
             <h3 className="text-xl sm:text-3xl font-medium text-white">
-              Open Bow Deck Breakfast & Barbecue
+              Open Bow Deck Breakfast & Gourmet Feasts
             </h3>
           </div>
         </div>
@@ -82,16 +82,16 @@ export default function DiningPage() {
               <Flame size={20} />
             </div>
             <h3 className="text-lg font-semibold text-[#1A0F0A]">
-              Deck Grills & Wood-Fired Dinner
+              Chef's Artisanal Dinner & Himalayan Delicacies
             </h3>
             <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
-              Fresh mountain trout, seasonal hill vegetables, and artisanal Himalayan marinades grilled over charcoal embers on the upper deck under the Garhwal dark sky.
+              Fresh mountain trout, seasonal hill vegetables, and artisanal Himalayan marinades delicately prepared by our chef under the Garhwal dark sky.
             </p>
           </div>
 
           <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#2C1A10]/10 shadow-xs space-y-3">
             <div className="w-10 h-10 rounded-full bg-[#F5EFEB] text-[#8C6747] flex items-center justify-center">
-              <Wine size={20} />
+              <Sparkles size={20} />
             </div>
             <h3 className="text-lg font-semibold text-[#1A0F0A]">
               Sunset High Tea Cruise

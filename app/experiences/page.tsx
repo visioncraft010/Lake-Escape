@@ -399,10 +399,10 @@ export default function ExperiencesPage() {
                 <Utensils size={18} />
               </div>
               <h4 className="text-base font-semibold text-[#1A0F0A]">
-                Bow Deck Barbecue
+                Bow Deck Sunset Dining
               </h4>
               <p className="text-xs text-[#1A0F0A]/75 leading-relaxed font-normal">
-                Wood-fired trout and seasonal mountain marinades prepared fresh over open deck coals.
+                Fresh mountain trout and seasonal Himalayan recipes curated by our private executive chef under the evening sky.
               </p>
             </div>
           </div>

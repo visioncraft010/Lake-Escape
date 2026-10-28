@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Utensils, Wine, Sparkles } from "lucide-react";
+import { Utensils, Coffee, Sparkles } from "lucide-react";
 
 export function DiningSection() {
   return (
@@ -37,7 +37,7 @@ export function DiningSection() {
           </h2>
 
           <p className="font-sans text-sm font-normal text-slate-300 leading-relaxed tracking-[-0.01em]">
-            Dine surrounded by tranquil mountain waters. Our dedicated executive chef curates bespoke menus combining rare Himalayan mountain herbs, fresh lake catch, and international wood-fired grilling on the open deck.
+            Dine surrounded by tranquil mountain waters. Our dedicated executive chef curates bespoke menus combining rare Himalayan mountain herbs, fresh lake catch, and handcrafted culinary delicacies on the open deck.
           </p>
 
           <div className="grid grid-cols-2 gap-3 border-t border-white/[0.12] pt-5 font-sans text-xs font-semibold text-slate-300 tracking-[-0.01em]">
@@ -46,8 +46,8 @@ export function DiningSection() {
               <span>Private Chef on Board</span>
             </div>
             <div className="flex items-center gap-2">
-              <Wine size={14} className="text-slate-400" />
-              <span>Curated Cellar List</span>
+              <Coffee size={14} className="text-slate-400" />
+              <span>Artisan Mountain Teas</span>
             </div>
           </div>
 

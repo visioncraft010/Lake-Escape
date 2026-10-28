@@ -201,29 +201,62 @@ export default function TermsPage() {
           </div>
         </section>
 
-        {/* 4. Cancellation & Reservation Policies */}
+        {/* 4. Vessel House Rules & Prohibited Activities */}
         <section className="bg-white rounded-2xl p-6 sm:p-10 border border-[#2C1A10]/10 shadow-xs space-y-4">
           <div className="flex items-center gap-3 border-b border-[#2C1A10]/10 pb-4">
             <AlertCircle size={20} className="text-[#8C6747]" />
             <h2 className="text-xl sm:text-2xl font-semibold text-[#1A0F0A]">
-              Booking & Cancellation Guidelines
+              Vessel House Rules & Prohibitions
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div className="p-4 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8 space-y-1.5">
+              <span className="font-semibold text-[#1A0F0A] block text-sm">No Barbecue or Open Flames</span>
+              <p className="text-[#1A0F0A]/70 leading-relaxed">
+                To uphold strict marine and fire safety regulations, open barbecues, charcoal deck grills, and open flames are strictly not permitted on board. All meals are prepared safely in our certified galley.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8 space-y-1.5">
+              <span className="font-semibold text-[#1A0F0A] block text-sm">No Lake Swimming</span>
+              <p className="text-[#1A0F0A]/70 leading-relaxed">
+                Direct swimming or diving into the reservoir waters from the vessel or staterooms is strictly prohibited for personal safety and reservoir maritime compliance.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-[#FBF9F5] border border-[#2C1A10]/8 space-y-1.5">
+              <span className="font-semibold text-[#1A0F0A] block text-sm">No Alcohol or Wine</span>
+              <p className="text-[#1A0F0A]/70 leading-relaxed">
+                Lake Escape operates as a tranquil, alcohol-free luxury floating sanctuary. Possession, consumption, or service of alcohol, wine, or intoxicating beverages is strictly disallowed aboard the boat.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. Booking, Sailing & Reservoir Guidelines */}
+        <section className="bg-white rounded-2xl p-6 sm:p-10 border border-[#2C1A10]/10 shadow-xs space-y-4">
+          <div className="flex items-center gap-3 border-b border-[#2C1A10]/10 pb-4">
+            <Compass size={20} className="text-[#8C6747]" />
+            <h2 className="text-xl sm:text-2xl font-semibold text-[#1A0F0A]">
+              Booking & Sailing Guidelines
             </h2>
           </div>
 
           <div className="space-y-3 text-xs sm:text-sm text-[#1A0F0A]/80 leading-relaxed">
             <p>
-              • <strong>Flexible Cancellation:</strong> Full refund or date alteration is available for cancellations made at least 7 days prior to the scheduled check-in date.
+              • <strong>Firm Reservations:</strong> All suite bookings and charter buyouts are confirmed specifically for the reserved dates upon advance booking.
             </p>
             <p>
-              • <strong>Late Cancellation:</strong> Cancellations made within 7 days of arrival are subject to a 50% retention charge. Cancellations within 48 hours or no-shows are non-refundable.
+              • <strong>Sailing & Lake Conditions:</strong> Vessel navigation and scheduled cruise routes depend strictly on prevailing wind, water conditions, and administrative reservoir clearance.
             </p>
             <p>
-              • <strong>Weather Alterations:</strong> In case of extreme weather or official reservoir notices preventing sailing, cruise routes may be adjusted or rescheduled safely by the boat master.
+              • <strong>Stationary Water Stay Policy:</strong> In the event that adverse weather, technical considerations, or local safety directives prevent the vessel from sailing, the boat will remain safely anchored or berthed in the lake/river. Guests will continue to enjoy the complete luxury floating hotel experience—including en-suite staterooms, panoramic views, attentive crew service, and private chef dining. Experiencing the serene water and scenic mountains from the side of the lake is an integral, peaceful dimension of the stay and does not qualify for cancellations, rescheduling, or refunds.
             </p>
           </div>
         </section>
 
-        {/* 5. Contact & Operator Details */}
+        {/* 6. Contact & Operator Details */}
         <section className="bg-[#1A0F0A] text-white rounded-2xl p-6 sm:p-10 border border-[#2C1A10] shadow-md">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div>
@@ -239,7 +272,7 @@ export default function TermsPage() {
               </p>
               <p className="text-xs text-white/80 mt-1 flex items-center gap-1.5">
                 <Phone size={13} className="text-[#D6C4AD]" />
-                <span>Phone / WhatsApp: +91 98765 43210</span>
+                <span>Phone / WhatsApp: +91 97629 85044</span>
               </p>
             </div>
 

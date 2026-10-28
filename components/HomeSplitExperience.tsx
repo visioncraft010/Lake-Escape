@@ -51,7 +51,7 @@ export function HomeSplitExperience() {
               </h2>
 
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed mb-8 font-normal">
-                Swim before breakfast. Board the private speedboat for a secluded Garhwal mountain cove. Return when the private chef lights the open wood-fired deck grill under the alpine stars.
+                Sunrise tea before breakfast. Board the private speedboat for a secluded Garhwal mountain cove. Return when the private chef prepares curated Himalayan specialties under the alpine stars.
               </p>
 
               <Link

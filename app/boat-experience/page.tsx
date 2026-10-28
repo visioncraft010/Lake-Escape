@@ -37,7 +37,7 @@ const inclusions = [
   "Dedicated on-board private chef with fully customizable gourmet menu (all meals included)",
   "Daily 2-hour Sunset High Tea Cruise across Tehri Lake (4:00 PM – 6:00 PM)",
   "Complimentary high-speed private speedboat launch transfers for all guests",
-  "Rooftop open-air stargazing & bonfire/barbecue lounge on the upper deck",
+  "Rooftop open-air stargazing & panoramic observation lounge on the upper deck",
   "High-speed Starlink Satellite Wi-Fi across all suites and communal decks",
   "All non-alcoholic artisan beverages, mountain spring water & fresh pressed juices",
   "Full crew service with 24/7 dedicated hospitality and housekeeping"
@@ -308,7 +308,7 @@ export default function BoatExperiencePage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 size={14} className="text-white shrink-0" />
-                  <span>Upper deck barbecue & private stargazing party</span>
+                  <span>Upper deck panoramic dining & private stargazing</span>
                 </li>
               </ul>
             </div>

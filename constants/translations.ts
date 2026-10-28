@@ -17,7 +17,7 @@ export const translations = {
     hero: {
       eyebrow: "IN LUXURY",
       title: "YOUR STORY",
-      subtitle: "A floating retreat on Tehri Lake, Uttarakhand. Experience silent water cruises, wood-fire grills, and panoramic mountain views."
+      subtitle: "A floating retreat on Tehri Lake, Uttarakhand. Experience silent water cruises, artisanal chef dining, and panoramic mountain views."
     },
     intro: {
       eyebrow: "The Concept",
@@ -76,12 +76,12 @@ export const translations = {
       },
       floatingDining: {
         title: "Floating Dining",
-        text: "Regional Uttarakhand plates, live grills, and celebration menus served on the lake."
+        text: "Regional Uttarakhand plates, curated dining, and celebration menus served on the lake."
       }
     },
     dining: {
       eyebrow: "Gastronomy",
-      title: "Wood-fire grills and mountain harvests.",
+      title: "Chef-crafted delicacies and mountain harvests.",
       text: "Our cuisine celebrates the personality and creativity of Uttarakhand, utilizing organic pulses, local grains, and fresh lake trout.",
       bistro: "Charlô Bistrô",
       bistroDesc: "Signature local recipes and contemporary reinterpretations that celebrate regional flavours.",
@@ -92,10 +92,10 @@ export const translations = {
     wellness: {
       eyebrow: "Wellness & Spa",
       title: "Recharge under mountain skies.",
-      desc: "Our wellness deck offers organic herbal therapy, a heated plunge pool, and a silent yoga space overlooking the lake.",
+      desc: "Our wellness deck offers organic herbal therapy, scenic relaxation sun loungers, and a silent yoga space overlooking the lake.",
       tabs: {
         spa: "Herbal Spa",
-        pool: "Plunge Pool",
+        pool: "Sun Deck",
         yoga: "Yoga Deck"
       }
     },
@@ -219,10 +219,10 @@ export const translations = {
     wellness: {
       eyebrow: "वेलनेस और स्पा",
       title: "पहाड़ी आसमान के नीचे तरोताज़ा हों।",
-      desc: "हमारा वेलनेस डेक हर्बल थेरेपी, एक गर्म पूल और झील को देखने वाला एक शांत योग स्थान प्रदान करता है।",
+      desc: "हमारा वेलनेस डेक हर्बल थेरेपी, आरामदायक सन लाउंजर और झील को देखने वाला एक शांत योग स्थान प्रदान करता है।",
       tabs: {
         spa: "हर्बल स्पा",
-        pool: "प्लंज पूल",
+        pool: "सन डेक",
         yoga: "योग डेक"
       }
     },

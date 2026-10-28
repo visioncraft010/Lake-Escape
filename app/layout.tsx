@@ -24,6 +24,8 @@ export const metadata: Metadata = {
 
 import { LightboxProvider } from "@/providers/LightboxProvider";
 
+import { StickyContactButtons } from "@/components/StickyContactButtons";
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -33,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Navbar />
           {children}
           <BookingBar />
+          <StickyContactButtons />
           <Footer />
         </LightboxProvider>
       </body>

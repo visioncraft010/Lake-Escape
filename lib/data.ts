@@ -131,7 +131,7 @@ export const rooms: RoomData[] = [
     tone: "Golden hour sanctuary crafted for slow evenings, panoramic horizon windows and bespoke leather detailing.",
     description: "Framed to capture Tehri's golden hours as the sun dips below the Garhwal Himalayan ridge. Complete with sunken deck seating, handcrafted oak paneling, and acoustic isolation for ultimate serenity.",
     amenities: ["Sunset Veranda", "Queen Luxury Bed", "Complimentary Mini Bar", "Marble Ensuite Bath", "Starlink Wi-Fi", "Evening Turndown Service"],
-    features: ["Sunset Horizon Orientation", "Private Wine Tasting Setup", "Breakfast, Dinner & Snacks Included", "Sunset Cruise Included"]
+    features: ["Sunset Horizon Orientation", "Private Tea & Artisan Beverage Ritual", "Breakfast, Dinner & Snacks Included", "Sunset Cruise Included"]
   },
   {
     id: "room-3",
@@ -215,7 +215,7 @@ export const charterPackages = [
       "All meals: Slow mountain breakfast, Sunset High Tea, Multi-course dinner & snacks",
       "Daily sunset & scenic evening cruise covering Dobra Bridge",
       "Complimentary VIP speedboat transfers to/from Koti Colony jetty",
-      "Full access to 360° Skydeck, stargazing telescope & rooftop barbecue lounge",
+      "Full access to 360° Skydeck, stargazing telescope & panoramic open-air lounge",
       "High-speed Starlink maritime connectivity throughout"
     ],
     idealFor: "Family celebrations, intimate weddings, corporate retreats, private gatherings"
@@ -359,7 +359,9 @@ export const faqs: [string, string][] = [
   ["What is included in the room tariff?", "All room reservations include breakfast, scheduled sunset high tea cruise, dinner & snacks, private speedboat transfers to and from Koti Colony jetty, and high-speed Starlink Wi-Fi."],
   ["Where is the boarding jetty for Lake Escape?", "Guests board via our private VIP speedboats at Koti Colony Bay Jetty on Tehri Lake, New Tehri, Uttarakhand (249001). transfers take approximately 8-10 minutes."],
   ["Can I hire the boat for a sunset cruise without an overnight stay?", "Yes, our Sunset Cruise runs daily from 4:00 PM to 6:00 PM for ₹3,000 per person, including high tea and scenic lake navigation around the Dobra Chanti Bridge."],
-  ["What safety measures are present on board?", "Every suite is equipped with life jackets. The vessel maintains certified fire safety systems, automated bilge and navigation gear, emergency evacuation protocols, and round-the-clock trained marine staff."]
+  ["What safety measures are present on board?", "Every suite is equipped with life jackets. The vessel maintains certified fire safety systems, automated bilge and navigation gear, emergency evacuation protocols, and round-the-clock trained marine staff."],
+  ["What happens if the boat cannot sail due to weather or technical factors?", "In the event that adverse weather or reservoir conditions prevent the boat from sailing, the vessel remains anchored safely in the serene waters of the lake. Guests continue to enjoy the full floating luxury experience, stateroom comfort, private chef dining, and breathtaking lake views from the side of the water, which itself is a quintessential part of the stay."],
+  ["Are barbecue, swimming, or alcohol permitted on board?", "To preserve marine safety, passenger tranquility, and pristine reservoir ecology, open barbecues, swimming directly from the vessel, and all alcoholic or wine beverages are strictly prohibited on board."]
 ];
 
 export const vesselSpecs = [
@@ -522,7 +524,7 @@ export const galleryPhotos: GalleryPhotoItem[] = [
     title: "Candlelit Deck Gastronomy",
     category: "dining",
     categoryLabel: "Dining",
-    description: "Evening wood-fired barbecue and gourmet dinners under the stars."
+    description: "Candlelit gourmet dining and regional alpine delicacies under the stars."
   },
   {
     id: "gal-lounge-1",

@@ -181,7 +181,7 @@ export function Hero() {
           <div className="flex items-center justify-between px-2 pt-2 text-[11px] text-white/80">
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={12} className="text-[#E6DCCE]" />
-              <span>Flexible cancellation up to 7 days before arrival</span>
+              <span>All meals, tea service & scheduled sunset cruise included</span>
             </span>
             <span className="hidden sm:inline text-white/70">
               Complimentary speedboat transfers included
