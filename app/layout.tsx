@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { BookingBar } from "@/components/BookingBar";
 import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
@@ -23,8 +20,7 @@ export const metadata: Metadata = {
 };
 
 import { LightboxProvider } from "@/providers/LightboxProvider";
-
-import { StickyContactButtons } from "@/components/StickyContactButtons";
+import { SiteLayoutWrapper } from "@/components/SiteLayoutWrapper";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -32,11 +28,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="font-sans antialiased bg-white text-[#1A0F0A]" suppressHydrationWarning>
         <LightboxProvider>
           <MotionProvider />
-          <Navbar />
-          {children}
-          <BookingBar />
-          <StickyContactButtons />
-          <Footer />
+          <SiteLayoutWrapper>
+            {children}
+          </SiteLayoutWrapper>
         </LightboxProvider>
       </body>
     </html>
