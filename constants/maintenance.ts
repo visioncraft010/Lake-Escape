@@ -5,4 +5,4 @@
  * 
  * The standalone maintenance page is also always accessible at `/maintenance`.
  */
-export const IS_MAINTENANCE_MODE = true;
+export const IS_MAINTENANCE_MODE = false;
