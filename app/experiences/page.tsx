@@ -26,10 +26,8 @@ export default function ExperiencesPage() {
   const { openLightbox } = useLightbox();
 
   // Carousel active indices
-  const [skydeckIndex, setSkydeckIndex] = useState(0);
   const [rooftopIndex, setRooftopIndex] = useState(0);
 
-  const skydeckImages = media.skydeckGallery;
   const rooftopImages = media.rooftopGallery;
 
   return (
@@ -138,117 +136,7 @@ export default function ExperiencesPage() {
           </div>
         </section>
 
-        {/* 2. Interactive Carousel: Skydeck and Starlight Lounge */}
-        <section className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#2C1A10]/10 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Copy */}
-            <div className="lg:col-span-5 space-y-4 anim-entry-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5EFEB] text-[#8C6747] text-[10px] font-bold uppercase tracking-wider border border-[#2C1A10]/10">
-                <Sparkles size={12} />
-                <span>Interactive Gallery</span>
-              </div>
-
-              <h2 className="text-2xl sm:text-4xl text-[#1A0F0A] font-medium leading-tight">
-                Skydeck & Starlight Lounge
-              </h2>
-
-              <p className="text-xs sm:text-sm text-[#1A0F0A]/80 leading-relaxed font-normal">
-                Positioned on the highest point of the yacht, the Skydeck offers 360-degree celestial viewing. Far from city lights, Tehri Lake provides zero-light-pollution night skies with telescope stargazing, cushioned lounges, and ambient deck lanterns.
-              </p>
-
-              <div className="pt-2">
-                <button
-                  onClick={() => openLightbox(skydeckImages.map((src, idx) => ({
-                    src,
-                    title: `Skydeck & Starlight Lounge (Photo ${idx + 1})`,
-                    category: "Skydeck & Starlight Lounge",
-                    description: "360° celestial stargazing deck on Tehri Lake."
-                  })), skydeckIndex)}
-                  className="px-6 py-3 rounded-full bg-[#1A0F0A] hover:bg-[#2C1A10] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm inline-flex items-center gap-2 cursor-pointer"
-                >
-                  <Camera size={13} />
-                  <span>Open Full Skydeck Carousel ({skydeckImages.length} Photos)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Interactive Carousel */}
-            <div className="lg:col-span-7 space-y-3 anim-entry-right">
-              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#1A0F0A] shadow-md border border-[#2C1A10]/10 group">
-                <Image
-                  src={skydeckImages[skydeckIndex]}
-                  alt="Skydeck and Starlight Lounge"
-                  fill
-                  className="object-cover transition-all duration-500"
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                />
-
-                {/* Click to expand overlay */}
-                <button
-                  onClick={() => openLightbox(skydeckImages.map((src, idx) => ({
-                    src,
-                    title: `Skydeck & Starlight Lounge (Photo ${idx + 1})`,
-                    category: "Skydeck & Starlight Lounge",
-                    description: "360° celestial stargazing deck on Tehri Lake."
-                  })), skydeckIndex)}
-                  className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  <span className="px-4 py-2 rounded-full bg-white text-[#1A0F0A] text-xs font-bold shadow-lg flex items-center gap-1.5 backdrop-blur-sm">
-                    <Maximize2 size={13} />
-                    <span>Click to Enlarge</span>
-                  </span>
-                </button>
-
-                {/* Left / Right Nav Arrows */}
-                <div className="absolute bottom-4 right-4 z-10 flex gap-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSkydeckIndex((i) => (i === 0 ? skydeckImages.length - 1 : i - 1));
-                    }}
-                    className="w-9 h-9 rounded-full bg-white hover:bg-[#F5EFEB] text-[#1A0F0A] flex items-center justify-center shadow-md transition cursor-pointer"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSkydeckIndex((i) => (i === skydeckImages.length - 1 ? 0 : i + 1));
-                    }}
-                    className="w-9 h-9 rounded-full bg-white hover:bg-[#F5EFEB] text-[#1A0F0A] flex items-center justify-center shadow-md transition cursor-pointer"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
-
-                <div className="absolute bottom-4 left-4 z-10 text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                  {skydeckIndex + 1} / {skydeckImages.length}
-                </div>
-              </div>
-
-              {/* Thumbnails Row */}
-              <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
-                {skydeckImages.map((src, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSkydeckIndex(i)}
-                    className={`relative w-16 h-12 rounded-lg overflow-hidden border-2 shrink-0 transition-all cursor-pointer ${
-                      i === skydeckIndex ? "border-[#8C6747] scale-105" : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <Image src={src} alt="Thumbnail" fill className="object-cover" />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* 3. Interactive Carousel: Rooftop Views */}
+        {/* 2. Interactive Carousel: Rooftop Views */}
         <section className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#2C1A10]/10 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
