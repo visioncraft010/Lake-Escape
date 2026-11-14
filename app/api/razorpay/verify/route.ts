@@ -3,8 +3,23 @@ import crypto from "crypto";
 
 export async function POST(req: Request) {
   try {
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!secret) {
+      return NextResponse.json(
+        { ok: false, error: "Payment gateway is not configured." },
+        { status: 503 }
+      );
+    }
+
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
-    const secret = process.env.RAZORPAY_KEY_SECRET || "sample_secret_key";
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return NextResponse.json(
+        { ok: false, error: "Missing payment verification parameters." },
+        { status: 400 }
+      );
+    }
 
     const text = `${razorpay_order_id}|${razorpay_payment_id}`;
     const expectedSignature = crypto

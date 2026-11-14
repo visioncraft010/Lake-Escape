@@ -7,9 +7,8 @@ export async function GET(req: Request) {
   try {
     const user = await getCurrentUser();
     
-    // In dev mode or with ADMIN/STAFF role, allow access
     const isAuthorized = user?.role === "ADMIN" || user?.role === "STAFF";
-    if (!isAuthorized && process.env.NODE_ENV === "production") {
+    if (!isAuthorized) {
       return NextResponse.json({ error: "Unauthorized. Staff or Admin access required." }, { status: 403 });
     }
 
@@ -66,7 +65,7 @@ export async function PATCH(req: Request) {
   try {
     const user = await getCurrentUser();
     const isAuthorized = user?.role === "ADMIN" || user?.role === "STAFF";
-    if (!isAuthorized && process.env.NODE_ENV === "production") {
+    if (!isAuthorized) {
       return NextResponse.json({ error: "Unauthorized. Staff or Admin access required." }, { status: 403 });
     }
 

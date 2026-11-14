@@ -89,11 +89,15 @@ export async function POST(req: Request) {
     const resendApiKey = process.env.RESEND_API_KEY;
     const fast2SmsKey = process.env.FAST2SMS_API_KEY;
 
+    // ⚠ devCode is ONLY returned in local development when SMS/Email providers are not configured.
+    // It is NEVER sent in production — the actual OTP is always delivered via the provider.
+    const exposeDevCode =
+      isDev && (!resendApiKey || (cleanType === "PHONE" && !fast2SmsKey));
+
     return NextResponse.json({
       success: true,
       message: `Verification code sent to ${cleanTarget}`,
-      // In development or if SMS provider is not yet configured, return devCode for seamless instant verification
-      ...(isDev || !resendApiKey || (cleanType === "PHONE" && !fast2SmsKey) ? { devCode: code } : {}),
+      ...(exposeDevCode ? { devCode: code } : {}),
     });
   } catch (error: unknown) {
     console.error("Error in /api/auth/otp/send:", error);

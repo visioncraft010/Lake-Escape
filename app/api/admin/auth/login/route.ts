@@ -19,10 +19,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Database service unavailable." }, { status: 503 });
     }
 
-    // Default permanent admin identity
-    const defaultAdminEmail = "info@lakeescape.in";
-    const defaultAdminPhone = "9762985044";
-    const defaultAdminPass = "LakeEscape@2026";
+    // Default permanent admin identity — loaded from env, never hardcoded
+    const defaultAdminEmail = process.env.ADMIN_DEFAULT_EMAIL || "info@lakeescape.in";
+    const defaultAdminPhone = process.env.ADMIN_DEFAULT_PHONE || "9762985044";
+    const defaultAdminPass = process.env.ADMIN_DEFAULT_PASSWORD;
 
     // Auto-ensure permanent admin exists if logging in with the default admin identity
     if (cleanId === defaultAdminEmail || cleanId === defaultAdminPhone) {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
         }
       });
 
-      if (!adminExists) {
+      if (!adminExists && defaultAdminPass) {
         const passwordHash = await hashPassword(defaultAdminPass);
         await prisma.user.create({
           data: {

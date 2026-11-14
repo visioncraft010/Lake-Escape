@@ -4,6 +4,17 @@ import { Resend } from "resend";
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
+// Sanitize user input to prevent HTML injection in email templates
+function sanitize(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -25,10 +36,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Name is required." }, { status: 400 });
     }
 
+    const safeName = sanitize(name);
+    const safeRoom = sanitize(room || "General Sanctuary Stay");
+    const safeRequests = sanitize(specialRequests || notes || "No special requests specified.");
+    const safeCheckIn = sanitize(checkIn);
+    const safeCheckOut = sanitize(checkOut);
+    const safeGuests = sanitize(guests || "2");
+
     const guestEmail = email || (contact && contact.includes("@") ? contact : null);
     const guestPhone = phone || (contact && !contact.includes("@") ? contact : contact || "Not specified");
-    const requestedRoom = room || "General Sanctuary Stay";
-    const guestRequests = specialRequests || notes || "No special requests specified.";
+    const requestedRoom = safeRoom;
+    const guestRequests = safeRequests;
     const hotelRecipient = process.env.HOTEL_NOTIFICATION_EMAIL || "info@lakeescape.in";
     const fromAddress = process.env.RESEND_FROM_EMAIL || "Lake Escape <info@lakeescape.in>";
 
@@ -42,7 +60,7 @@ export async function POST(req: Request) {
             <div style="border-bottom: 2px solid #8C6747; padding-bottom: 20px; margin-bottom: 24px;">
               <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #8C6747; margin: 0 0 6px;">Lake Escape · Tehri Lake Sanctuary</p>
               <h2 style="font-size: 22px; font-weight: 600; margin: 0; color: #1A0F0A;">New Guest Reservation Enquiry</h2>
-              <p style="font-size: 12px; color: #5A3D2C; margin: 4px 0 0;">Source: ${source}</p>
+              <p style="font-size: 12px; color: #5A3D2C; margin: 4px 0 0;">Source: ${sanitize(source)}</p>
             </div>
 
             <div style="background: #F8F5F0; border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid rgba(44, 26, 16, 0.08);">
@@ -50,7 +68,7 @@ export async function POST(req: Request) {
               <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <tr>
                   <td style="padding: 6px 0; color: #7A5C47; width: 130px;"><strong>Name:</strong></td>
-                  <td style="padding: 6px 0; color: #1A0F0A; font-weight: 500;">${name}</td>
+                  <td style="padding: 6px 0; color: #1A0F0A; font-weight: 500;">${safeName}</td>
                 </tr>
                 <tr>
                   <td style="padding: 6px 0; color: #7A5C47;"><strong>Phone:</strong></td>
@@ -70,7 +88,7 @@ export async function POST(req: Request) {
               <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <tr>
                   <td style="padding: 6px 0; color: #7A5C47; width: 130px;"><strong>Experience / Room:</strong></td>
-                  <td style="padding: 6px 0; color: #1A0F0A; font-weight: 600;">${requestedRoom}</td>
+                  <td style="padding: 6px 0; color: #1A0F0A; font-weight: 600;">${safeRoom}</td>
                 </tr>
                 ${checkIn ? `
                 <tr>
@@ -90,7 +108,7 @@ export async function POST(req: Request) {
                 </tr>
                 <tr>
                   <td style="padding: 6px 0; color: #7A5C47; vertical-align: top;"><strong>Notes / Requests:</strong></td>
-                  <td style="padding: 6px 0; color: #1A0F0A; line-height: 1.5;">${guestRequests}</td>
+                  <td style="padding: 6px 0; color: #1A0F0A; line-height: 1.5;">${safeRequests}</td>
                 </tr>
               </table>
             </div>
@@ -123,16 +141,16 @@ export async function POST(req: Request) {
             </div>
 
             <p style="font-size: 14px; line-height: 1.6; color: #4B3024; margin-bottom: 20px;">
-              Dear <strong>${name}</strong>,
+              Dear <strong>${safeName}</strong>,
             </p>
 
             <p style="font-size: 14px; line-height: 1.6; color: #4B3024; margin-bottom: 24px;">
-              Thank you for considering Lake Escape for your journey. We have logged your request for <strong>${requestedRoom}</strong>. Our guest relations team is currently reviewing availability and will reach out to you directly via phone or email within the next 2 hours.
+              Thank you for considering Lake Escape for your journey. We have logged your request for <strong>${safeRoom}</strong>. Our guest relations team is currently reviewing availability and will reach out to you directly via phone or email within the next 2 hours.
             </p>
 
             <div style="background: #F8F5F0; border-radius: 12px; padding: 18px; margin-bottom: 26px; border: 1px solid rgba(44, 26, 16, 0.08); font-size: 13px;">
-              <p style="margin: 0 0 6px; color: #7A5C47;"><strong>Dates:</strong> ${checkIn || "Flexible"} to ${checkOut || "Flexible"}</p>
-              <p style="margin: 0 0 6px; color: #7A5C47;"><strong>Guests:</strong> ${guests || 2}</p>
+              <p style="margin: 0 0 6px; color: #7A5C47;"><strong>Dates:</strong> ${safeCheckIn || "Flexible"} to ${safeCheckOut || "Flexible"}</p>
+              <p style="margin: 0 0 6px; color: #7A5C47;"><strong>Guests:</strong> ${safeGuests}</p>
               <p style="margin: 0; color: #7A5C47;"><strong>Jetty Boarding Bay:</strong> Koti Colony, Tehri Lake (Complimentary speedboat transfer)</p>
             </div>
 

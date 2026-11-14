@@ -13,25 +13,55 @@ export async function POST(req: Request) {
     const cleanCode = String(code).trim();
     const cleanPurpose = String(purpose).toUpperCase();
 
+    // Validate code format — must be exactly 6 digits
+    if (!/^\d{6}$/.test(cleanCode)) {
+      return NextResponse.json({ error: "Invalid verification code format" }, { status: 400 });
+    }
+
     if (!prisma) {
       return NextResponse.json({ error: "Database not connected" }, { status: 503 });
     }
 
+    // Fetch the latest OTP record for this target (regardless of code, to check attempts)
     const record = await prisma.otpVerification.findFirst({
       where: {
         target: cleanTarget,
         purpose: cleanPurpose,
-        code: cleanCode,
+        verified: false,
       },
       orderBy: { createdAt: "desc" },
     });
 
     if (!record) {
-      return NextResponse.json({ error: "Invalid verification code" }, { status: 400 });
+      return NextResponse.json({ error: "No pending verification found. Please request a new code." }, { status: 400 });
     }
 
     if (new Date() > new Date(record.expiresAt)) {
       return NextResponse.json({ error: "Verification code has expired. Please request a new one." }, { status: 400 });
+    }
+
+    // Brute-force protection: max 5 attempts per OTP
+    const MAX_ATTEMPTS = 5;
+    const attempts = (record as { attempts?: number }).attempts ?? 0;
+    if (attempts >= MAX_ATTEMPTS) {
+      await prisma.otpVerification.delete({ where: { id: record.id } });
+      return NextResponse.json(
+        { error: "Too many failed attempts. Please request a new verification code." },
+        { status: 429 }
+      );
+    }
+
+    if (record.code !== cleanCode) {
+      // Increment attempt counter
+      await prisma.otpVerification.update({
+        where: { id: record.id },
+        data: { attempts: attempts + 1 } as Record<string, unknown>,
+      });
+      const remaining = MAX_ATTEMPTS - attempts - 1;
+      return NextResponse.json(
+        { error: `Invalid verification code. ${remaining} attempt${remaining === 1 ? "" : "s"} remaining.` },
+        { status: 400 }
+      );
     }
 
     // Mark as verified
